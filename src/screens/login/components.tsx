@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { View, Text, Image, Animated, Button, ToastAndroid, Alert } from 'react-native';
+import { View, Text, Image, Animated, Button, TextInput, ActivityIndicator, StyleSheet } from 'react-native';
 import { AppInput, AppButton, AppTextError } from '../../themes/theme';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import * as Colors from './../../themes/colors';
+import UsuarioService from '../../services/usuario.service';
+import { useNavigation } from '@react-navigation/native';
 
 export const Topo = () => (
     <Image source={require('./../../assets/imgs/topo.png')} resizeMode="stretch" style={{
@@ -17,19 +19,25 @@ export const Topo = () => (
 )
 
 
-export const Formulario = (props:{onSubmit(dados:any)}) => {
+export const Formulario = () => {
 
-    //Animação
-    const fadeAnim = React.useRef(new Animated.Value(0)).current;
-    React.useEffect(() => {
-        Animated.timing(fadeAnim, {duration: 3000, toValue: 1, useNativeDriver: true}).start()
-    }, [])
+    //Navigator
+    const nav = useNavigation();
 
     //Validção do formulário
     const validation = Yup.object().shape({
         email: Yup.string().email('Email inválido').required('Email obrigatório'),
         senha: Yup.string().required('Senha obrigatória').min(4, 'Mínimo 4 caracteres')
     });
+
+    //Botão de realizar o login
+    const [erroLogin, setErroLogin] = React.useState(false);
+    const logar = async (dados) => {
+        setErroLogin(false);
+        const resultado = await UsuarioService.login(dados.email, dados.senha)
+        if (resultado.sucesso) nav.navigate('app');
+        else setErroLogin(true);
+    }
       
     return (
         <>
@@ -37,27 +45,39 @@ export const Formulario = (props:{onSubmit(dados:any)}) => {
             <Formik
                 validationSchema={validation}
                 initialValues={{ email: '', senha: '' }}
-                onSubmit={values => props.onSubmit(values)}>
-                {({handleSubmit, handleChange, errors, touched, handleBlur}) => (
-                    <Animated.View style={{opacity:fadeAnim, backgroundColor:'white', borderRadius: 10, padding: 5, borderColor: 'rgba(0, 0, 0, 0.3)', borderWidth: 1}}>
+                onSubmit={logar}>
+                {({handleSubmit, handleChange, errors, touched, handleBlur, isSubmitting}) => (
+                    <View style={{backgroundColor:'white', borderRadius: 10, padding: 5, borderColor: 'rgba(0, 0, 0, 0.3)', borderWidth: 1}}>
                         <Text style={{textAlign:'center', fontSize: 30, margin:10}}>PalmTech</Text>
+                        
+                        {erroLogin && <Text style={{color:'red', textAlign:'center'}}>EMAIL OU SENHA INCORRETA</Text>}
+
                         {/* EMAIL */}
-                        <AppInput placeholder="Digite seu E-mail" onChangeText={handleChange('email')} onBlur={handleBlur('email')} keyboardType="email-address" />
+                        <TextInput style={styleForm.input} placeholder="Digite seu E-mail" onChangeText={handleChange('email')} onBlur={handleBlur('email')} keyboardType="email-address" />
                         {errors.email && touched.email && <AppTextError>{errors.email}</AppTextError>}
                         {/* SENHA */}
-                        <AppInput placeholder="Digite sua senha" onChangeText={handleChange('senha')} onBlur={handleBlur('senha')} secureTextEntry/>
+                        <TextInput style={styleForm.input} placeholder="Digite sua senha" onChangeText={handleChange('senha')} onBlur={handleBlur('senha')} secureTextEntry/>
                         {errors.senha && touched.senha && <AppTextError>{errors.senha}</AppTextError>}
                         {/* BOTÃO */}
-                        <AppButton title="Logar" onPress={handleSubmit}/>
-                    </Animated.View>
+
+                        { !isSubmitting && <AppButton title="Logar" onPress={handleSubmit}/>}
+                        { isSubmitting && <ActivityIndicator/>}
+                    </View>
                 )} 
             </Formik>
             {/* Botão de cadastro */}
             <View style={{marginTop: 10}}>
-                <Button title="Criar conta" color={Colors.TERTIARY} onPress={() => console.log('Clicou')}/>
+                <Button title="Criar conta" color={Colors.TERTIARY} onPress={() => nav.navigate('cadastro')}/>
             </View>
         </>
     )
 }
 
 
+const styleForm = StyleSheet.create({
+    input: { 
+        backgroundColor: 'rgba(255, 255, 255, 0.3)', 
+        padding: 10,
+        minWidth: 200
+    }
+})
