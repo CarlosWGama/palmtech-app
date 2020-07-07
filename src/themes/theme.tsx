@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import * as Colors from './colors';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'
 
@@ -24,22 +24,23 @@ export const AppContainer: any  = styled.View`
 export const AppTextError: any = styled.Text`
     color: red;
     text-align: right;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    font-family: Jura_400Regular;
 `
 
-export const AppButton = (props: {title:string, onPress?:any, style?:any}) => (
-        <View style={[{backgroundColor: Colors.PRIMARY, padding: 10, borderRadius: 5}, props.style]}>
-    <TouchableOpacity onPress={() => props.onPress()}>
-            <Text style={{color:'white', textAlign:'center'}}>{props.title}</Text>
-    </TouchableOpacity>
-        </View>
+export const AppButton = (props: {title:string, onPress?:any, style?:any, color?: string}) => (
+    <View style={[{backgroundColor: (!props.color ? Colors.PRIMARY : props.color), padding: 10, borderRadius: 5}, props.style]}>
+        <TouchableOpacity onPress={() => props.onPress()}>
+            <Text style={{color:'white', textAlign:'center', fontFamily:'Jura_400Regular'}}>{props.title}</Text>
+        </TouchableOpacity>
+    </View>
 )
 
 export const AppInput = (props: {titulo?: string, children:any, touched?:boolean, error?:string, noBorder?: boolean}) => (
     <View style={[{width:'100%', flexDirection:'column', justifyContent:'center', marginVertical:5, minHeight: 40}, (props.noBorder ? {} : {borderBottomWidth: 1, borderBottomColor: 'lightgrey'})]}>
         {/* CAMPO */}
         <View style={{width:'100%', flexDirection:'row', justifyContent:'space-between'}}>
-            {props.titulo && <Text style={{width:100}}>{props.titulo}:</Text>}
+            {props.titulo && <Text style={{width:100, fontFamily:'Jura_400Regular'}}>{props.titulo}:</Text>}
             <View style={{flex:1, alignItems:'stretch'}}>{props.children}</View>
         </View>
         {/* ERRRO */}
@@ -76,10 +77,15 @@ export const AppHeader = (props:{backButton?:boolean, backScreen?:string, titulo
                     }
                 </View>
                 {/* Título */}
-                <View><Text style={{color:'white', textTransform: 'uppercase'}}>{props.titulo}</Text></View>
+                <View><Text style={{color:'white', textTransform: 'uppercase', fontFamily:'Jura_400Regular'}}>{props.titulo}</Text></View>
                 {/* Botão Extras */}
                 <View>{props.extra}</View>
             </View>
         </View>
     )
 }
+
+export const fontPadrao = StyleSheet.create({
+    regular:{fontFamily:'Jura_400Regular'}, 
+    negrito: {fontFamily:'Jura_700Bold'}
+})

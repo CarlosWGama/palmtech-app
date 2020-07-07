@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { AppMain, AppInput, AppButton } from '../../themes/theme'; 
+import { AppMain, AppInput, AppButton, fontPadrao } from '../../themes/theme'; 
 import { TextInput } from 'react-native-gesture-handler';
 import { Topo, Formulario } from './components';
 import UsuarioService from '../../services/usuario.service';
 
-export interface LoginProps {
-}
 
-export function LoginScreen (props: LoginProps) {
+export function LoginScreen (props) {
 
     return (
       <AppMain verticalAlign="space-between">
@@ -18,8 +16,8 @@ export function LoginScreen (props: LoginProps) {
             <Formulario/>
           </View>
           <View style={style.rodape}>
-            <Text>CESMAC - Centro de Inovação</Text>
-            <Text>Versão 0.0.1</Text>
+            <Text style={fontPadrao.regular}>CESMAC - Centro de Inovação</Text>
+            <Text style={fontPadrao.regular}>Versão 0.0.1</Text>
           </View>
       </AppMain>
     );

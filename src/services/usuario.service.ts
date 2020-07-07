@@ -26,6 +26,18 @@ const UsuarioService = {
         })
     },
 
+    /** Solicita a recuperação do email do usuário */
+    recuperarSenha: (email: string): Promise<{sucesso: boolean}> => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                if (email == 'teste@teste.com')
+                    resolve({sucesso: true})
+                else resolve({sucesso: false});
+            }, 1000) 
+            
+        })
+    },
+
     /** Desloga o usuário */
     logout: () => {
 

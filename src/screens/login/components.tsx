@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Text, Image, Animated, Button, TextInput, ActivityIndicator, StyleSheet } from 'react-native';
-import { AppInput, AppButton, AppTextError } from '../../themes/theme';
+import { AppInput, AppButton, AppTextError, fontPadrao } from '../../themes/theme';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import * as Colors from './../../themes/colors';
@@ -48,7 +48,7 @@ export const Formulario = () => {
                 onSubmit={logar}>
                 {({handleSubmit, handleChange, errors, touched, handleBlur, isSubmitting}) => (
                     <View style={{backgroundColor:'white', borderRadius: 10, padding: 5, borderColor: 'rgba(0, 0, 0, 0.3)', borderWidth: 1}}>
-                        <Text style={{textAlign:'center', fontSize: 30, margin:10}}>PalmTech</Text>
+                        <Text style={[{textAlign:'center', fontSize: 30, margin:10}, fontPadrao.negrito]}>PalmTech</Text>
                         
                         {erroLogin && <Text style={{color:'red', textAlign:'center'}}>EMAIL OU SENHA INCORRETA</Text>}
 
@@ -66,8 +66,9 @@ export const Formulario = () => {
                 )} 
             </Formik>
             {/* Botão de cadastro */}
-            <View style={{marginTop: 10}}>
-                <Button title="Criar conta" color={Colors.TERTIARY} onPress={() => nav.navigate('cadastro')}/>
+            <View style={{marginTop: 10, flexDirection: 'row', justifyContent:'center'}} >
+                <AppButton title="Criar conta" color={Colors.TERTIARY} onPress={() => nav.navigate('cadastro')} style={{borderBottomEndRadius: 0, borderTopEndRadius: 0}}/>
+                <AppButton title="Recuperar senha" color={Colors.LIGHT} onPress={() => nav.navigate('recuperar-senha')} style={{borderBottomStartRadius: 0, borderTopStartRadius: 0}} />
             </View>
         </>
     )

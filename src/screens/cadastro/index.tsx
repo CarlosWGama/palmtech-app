@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Text, Button, TextInput, StyleSheet, ActivityIndicator, Platform, ToastAndroid, Image } from 'react-native';
-import { AppMain, AppHeader, AppContainer, AppInput, AppButton } from '../../themes/theme'; 
+import { AppMain, AppHeader, AppContainer, AppInput, AppButton, fontPadrao } from '../../themes/theme'; 
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import UsuarioService from '../../services/usuario.service';
@@ -46,7 +46,7 @@ export function CadastroScreen () {
             >
                 {({errors, handleBlur, handleChange, handleSubmit, touched, isSubmitting}) => (
                     <View style={style.formulario}>
-                        <Text style={style.titulo}>Cadastro de Usuário</Text>
+                        <Text style={[style.titulo, fontPadrao.negrito]}>Cadastro de Usuário</Text>
 
                         {/* NOME */}
                         <AppInput titulo="Nome" touched={touched.nome} error={errors.nome}>
