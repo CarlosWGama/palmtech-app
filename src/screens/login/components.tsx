@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import * as Colors from './../../themes/colors';
 import UsuarioService from '../../services/usuario.service';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { rdLogar } from '../../store/usuarios/actions';
 
 export const Topo = () => (
     <Image source={require('./../../assets/imgs/topo.png')} resizeMode="stretch" style={{
@@ -21,6 +23,9 @@ export const Topo = () => (
 
 export const Formulario = () => {
 
+    //Redux
+    const dispatch = useDispatch();
+
     //Navigator
     const nav = useNavigation();
 
@@ -35,7 +40,10 @@ export const Formulario = () => {
     const logar = async (dados) => {
         setErroLogin(false);
         const resultado = await UsuarioService.login(dados.email, dados.senha)
-        if (resultado.sucesso) nav.navigate('app');
+        if (resultado.sucesso) {    
+            dispatch(rdLogar(resultado.usuario))
+            nav.navigate('app');
+        }
         else setErroLogin(true);
     }
       

@@ -6,7 +6,7 @@ const UsuarioService = {
         return new Promise(resolve => {
             setTimeout(() => {
                 if (email == 'teste@teste.com' && senha == '123456')
-                    resolve({sucesso:true, usuario:{email: 'teste@teste.com', id: 1}})
+                    resolve({sucesso:true, usuario:{email: 'teste@teste.com', id: 1, nome: 'Carlos'}})
                 resolve({sucesso: false});
             }, 1000) 
             

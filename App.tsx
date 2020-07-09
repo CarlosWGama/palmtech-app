@@ -5,9 +5,11 @@ import {
     Jura_400Regular,
     Jura_700Bold,
 } from '@expo-google-fonts/jura';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { LoadingScreen } from './src/screens/loading';
-
+import { Provider } from 'react-redux';
+import providers from './src/store';
   
 export default () => {
 
@@ -18,5 +20,10 @@ export default () => {
     if (!fontsLoaded)  return (<LoadingScreen/>)
       
     //Carregado  
-    return (<Navigation/>)
+    return (
+        <Provider store={providers}>
+            <StatusBar style="light"/>
+            <Navigation/>
+        </Provider>
+    )
 };
