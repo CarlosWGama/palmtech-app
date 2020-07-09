@@ -36,7 +36,7 @@ export function DashboardScreen () {
               nestedScrollEnabled={true}
               data={pacientes}
               extraData={pacientes}
-              keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => String(item.id)}
               renderItem={({item}) => (
                 <CardPaciente paciente={item} onPress={() => console.log('Clicou')}/>
               )}              
