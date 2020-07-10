@@ -1,19 +1,19 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import * as Colors from './colors';
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, View, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'
 
 export const AppMain: any = styled.View`
     flex: 1;
-    background-color: #CDC9C9;
+    background: #CDC9C9;
     align-items: ${(props:any) => props.horizontalAlign ?  props.horizontalAlign : 'center'};
     justify-content: ${(props:any) => props.verticalAlign ?  props.verticalAlign : 'center'};
 `
 
 export const AppContainer: any  = styled.View`
-    margin-top: 80px;
+    margin-top: ${(props:any) => props.noMarginTop ?  '0px' : '80px'};
     width: 100%;
     padding: 10px;
     flex: 1;
@@ -27,6 +27,20 @@ export const AppTextError: any = styled.Text`
     margin-bottom: 10px;
     font-family: Jura_400Regular;
 `
+
+export const AppBackground = (props:{horizontalAlign?:string, verticalAlign?:string, children:any}) => (
+    <View style={{flex:1}}>
+        <Image source={require('./../assets/imgs/bg.png')} style={{
+            width:'100%',
+            height:'100%',
+            position: 'absolute'
+        }}/>
+        <View style={{padding:20, paddingTop:40, flex: 1}}>
+            {props.children}
+        </View>
+    </View>
+)
+
 
 export const AppButton = (props: {title:string, onPress?:any, style?:any, color?: string}) => (
     <View style={[{backgroundColor: (!props.color ? Colors.PRIMARY : props.color), padding: 10, borderRadius: 5}, props.style]}>
@@ -50,8 +64,21 @@ export const AppInput = (props: {titulo?: string, children:any, touched?:boolean
     </View>
 )
 
+export const AppBackButton = (props:{backScreen?:string}) => {
+    const nav = useNavigation();
+
+    return (<TouchableOpacity onPress={() => {
+        (props.backScreen ? nav.navigate(props.backScreen) : nav.goBack())
+    }}>
+        <View style={{flexDirection:'row', alignItems:'center'}}>
+            <Ionicons name="ios-arrow-back" color="white" />
+            <Text style={{color:'white', marginLeft: 5}}>VOLTAR</Text>
+        </View>
+    </TouchableOpacity>)
+}
+
 export const AppHeader = (props:{backButton?:boolean, backScreen?:string, titulo: string, extra?:any}) => {
-    const nav = useNavigation()
+
     return (
         <View style={{
             position: 'absolute',
@@ -66,14 +93,7 @@ export const AppHeader = (props:{backButton?:boolean, backScreen?:string, titulo
                 {/* Botão Voltar */}
                 <View>
                     {(props.backButton || props.backScreen) &&
-                        <TouchableOpacity onPress={() => {
-                            (props.backScreen ? nav.navigate(props.backScreen) : nav.goBack())
-                        }}>
-                            <View style={{flexDirection:'row', alignItems:'center'}}>
-                                <Ionicons name="ios-arrow-back" color="white" />
-                                <Text style={{color:'white', marginLeft: 5}}>VOLTAR</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <AppBackButton backScreen={props.backScreen}/>
                     }
                 </View>
                 {/* Título */}

@@ -4,9 +4,13 @@ import { AppMain, AppHeader, AppContainer, fontPadrao } from '../../../themes/th
 import { Header, OpcHeader, CardPaciente } from './components';
 import { PacienteService } from '../../../services/paciente.service';
 import { Paciente } from '../../../models/paciente';
+import { useNavigation } from '@react-navigation/native';
 
 export function DashboardScreen () {
 
+    //Navigator
+    const nav = useNavigation()
+    
     //Lista de Pacientes
     const [pacientes, setPacientes] = React.useState<Paciente[]>([]);
     React.useEffect(() => {
@@ -38,7 +42,7 @@ export function DashboardScreen () {
               extraData={pacientes}
               keyExtractor={(item) => String(item.id)}
               renderItem={({item}) => (
-                <CardPaciente paciente={item} onPress={() => console.log('Clicou')}/>
+                <CardPaciente paciente={item} onPress={() => nav.navigate('paciente-visualizar', {paciente:item})}/>
               )}              
             />
           </View>

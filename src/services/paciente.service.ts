@@ -16,6 +16,13 @@ export const PacienteService = {
                 new Paciente('Tulio Silva', '1972-04-03', 8),
             ])
         });
+    },
+
+    //Remove um paciente
+    remover(paciente: Paciente): Promise<{sucesso:boolean}> {
+        return new Promise(resolve => {
+            resolve({sucesso:true})
+        });
     }
 
 }
