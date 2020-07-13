@@ -30,7 +30,7 @@ export function DashboardScreen () {
             
             {/* OPÇÕES */}
             <View style={{flexDirection:'row', justifyContent:'center'}}>
-              <OpcHeader texto="Cadastrar paciente" icon="md-person-add" onPress={() => console.log('A')} />
+              <OpcHeader texto="Cadastrar paciente" icon="md-person-add" onPress={() => nav.navigate('paciente-edicao')} />
               <OpcHeader texto="Foto " icon="md-camera" onPress={() => console.log('A')} />
             </View>
 

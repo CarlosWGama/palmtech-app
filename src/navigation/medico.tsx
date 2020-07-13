@@ -2,10 +2,11 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons'
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DashboardScreen } from './../screens/app/dashboard';
-import { PacienteScreen } from './../screens/app/pacientes/visualizar';
-import * as Colors from './../themes/colors';
-import { ConfiguracoesScreen } from '../screens/app/configuracoes';
+import { DashboardScreen } from './../screens/medico/dashboard';
+import { PacienteEdicaoScreen } from './../screens/medico/dashboard/pacientes/editar';
+import { PacienteScreen } from './../screens/medico/dashboard/pacientes/visualizar';
+import * as Colors from '../themes/colors';
+import { ConfiguracoesScreen } from '../screens/medico/configuracoes';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -19,12 +20,13 @@ export const MainTabNavigator = () => (
 )
 
 
-export const AppNavigator = () => (
+export const MedicoNavigator = () => (
     <Stack.Navigator screenOptions={{headerShown: false, animationEnabled:true}}>
         {/* DENTRO DA TAB */}
         <Stack.Screen name="tab" component={MainTabNavigator}  />
         {/* FORA DA TAB */}
         <Stack.Screen name="paciente-visualizar" component={PacienteScreen} options={{cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS}}/>
+        <Stack.Screen name="paciente-edicao" component={PacienteEdicaoScreen} options={{cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS}}/>
     </Stack.Navigator>
 )
 

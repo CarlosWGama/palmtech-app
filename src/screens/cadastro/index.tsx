@@ -3,19 +3,25 @@ import { View, Text, Button, TextInput, StyleSheet, ActivityIndicator, Platform,
 import { AppMain, AppHeader, AppContainer, AppInput, AppButton, fontPadrao } from '../../themes/theme'; 
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import UsuarioService from '../../services/usuario.service';
+import { PacienteService } from '../../services/paciente.service';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import { Toast } from '../../themes/global/util';
+import { Paciente } from '../../models/paciente';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import moment from 'moment'
 
 export function CadastroScreen () {
 
-    // //Cadastra o usuário
+    //Cadastra o usuário
+    const [calendario, setCalendario] = React.useState(false);
     const [erro, setErro] = React.useState<string|null>(null);
     const nav = useNavigation()
 
-    const cadastrar = async (dados, {resetForm}) => {
+    const cadastrar = async (dados: Paciente, {resetForm}) => {
+        console.log(dados);
         setErro(null);
-        const resposta = await UsuarioService.cadastrar(dados);
+        const resposta = await PacienteService.cadastrar(dados);
         if (resposta.sucesso) {
             resetForm({});
             Toast("Usuário cadastrado com sucesso")
@@ -34,17 +40,18 @@ export function CadastroScreen () {
  
             <Formik
                 //Dados iniciais 
-                initialValues={{nome: '', email: '', senha: ''}}
+                initialValues={new Paciente}
                 // Validação de formulário
                 validationSchema={Yup.object().shape({
                     nome: Yup.string().required('Nome obrigatório'),
                     email: Yup.string().required('Email obrigatório').email('Email inválido').required('Email obrigatório'),
-                    senha: Yup.string().required('Senha obrigatória').min(6, 'Pelo menos 6 caractetes')
+                    senha: Yup.string().required('Senha obrigatória').min(6, 'Pelo menos 6 caractetes'),
+                    dataNascimento: Yup.string().required('Data de nascimento obrigatório')
                 })}
                 //Envio
                 onSubmit={cadastrar}
             >
-                {({errors, handleBlur, handleChange, handleSubmit, touched, isSubmitting}) => (
+                {({errors, values, setFieldValue,  handleBlur, handleChange, handleSubmit, touched, isSubmitting}) => (
                     <View style={style.formulario}>
                         <Text style={[style.titulo, fontPadrao.negrito]}>Cadastro de Usuário</Text>
 
@@ -64,6 +71,26 @@ export function CadastroScreen () {
                                 onChangeText={handleChange('email')} />
                         </AppInput>
 
+                        {/* DATA DE NASCIMENTO */}
+                        <AppInput titulo="Data de Nascimento" 
+                            touched={touched.dataNascimento} 
+                            error={errors.dataNascimento} 
+                        >
+                            <TouchableOpacity onPress={() => setCalendario(true)}>
+                              <Text>{values.dataNascimento != undefined ? moment(values.dataNascimento).format('DD/MM/YYYY') : 'Clique para selecionar data'}</Text>
+                            </TouchableOpacity>
+                          </AppInput>
+                          {calendario && 
+                              <DateTimePicker 
+                                value={new Date()}
+                                mode="date"
+                                onChange={(event, data) => {
+                                  setCalendario(false);
+                                  setFieldValue('dataNascimento', moment(data).format('YYYY-MM-DD'))
+                                }}
+                              />
+                          }
+
                         {/* SENHA */}
                         <AppInput titulo="Senha" touched={touched.senha} error={errors.senha} noBorder>
                             <TextInput 
@@ -81,9 +108,6 @@ export function CadastroScreen () {
                 )}
             </Formik>
         </AppContainer>
-
-
-
       </AppMain>
     );
 }
@@ -95,7 +119,7 @@ const style = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: 'rgba(255, 255, 255, 0.6)'
     },
-    imgBG: {width:'100%', height:'100%', elevation:-1, position: 'absolute'},
+    imgBG: { width:'100%', height:'100%', elevation:-1, position: 'absolute'},
     titulo: { textAlign: "center", fontSize: 20},
     erro: { textAlign: 'center', color: 'red', textTransform: 'uppercase', fontSize: 20}
 })

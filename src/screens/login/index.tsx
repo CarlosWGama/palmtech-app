@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { AppMain, AppInput, AppButton, fontPadrao } from '../../themes/theme'; 
-import { TextInput } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet } from 'react-native';
+import { AppMain, fontPadrao } from '../../themes/theme'; 
 import { Topo, Formulario } from './components';
-import UsuarioService from '../../services/usuario.service';
 
 
 export function LoginScreen (props) {

@@ -8,6 +8,7 @@ import UsuarioService from '../../services/usuario.service';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { rdLogar } from '../../store/usuarios/actions';
+import { UsuarioNivel } from '../../models/usuario';
 
 export const Topo = () => (
     <Image source={require('./../../assets/imgs/topo.png')} resizeMode="stretch" style={{
@@ -42,7 +43,7 @@ export const Formulario = () => {
         const resultado = await UsuarioService.login(dados.email, dados.senha)
         if (resultado.sucesso) {    
             dispatch(rdLogar(resultado.usuario))
-            nav.navigate('app');
+            nav.navigate(resultado.usuario?.nivel == UsuarioNivel.MEDICO ? 'medico' : 'paciente')
         }
         else setErroLogin(true);
     }

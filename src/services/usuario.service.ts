@@ -1,12 +1,16 @@
+import { Usuario, UsuarioNivel } from "../models/usuario";
+
 /** Service que controla o acesso aos dados do usuário */
 const UsuarioService = {
 
     /** Realiza o login do usuário */
-    login: (email: string, senha: string): Promise<{sucesso: boolean, usuario?:any}> => {
+    login: (email: string, senha: string): Promise<{sucesso: boolean, usuario?:Usuario}> => {
         return new Promise(resolve => {
             setTimeout(() => {
-                if (email == 'teste@teste.com' && senha == '123456')
-                    resolve({sucesso:true, usuario:{email: 'teste@teste.com', id: 1, nome: 'Carlos'}})
+                if (email == 'medico@teste.com' && senha == '123456')
+                    resolve({sucesso:true, usuario:new Usuario(1, 'Médico', 'medico@teste.com', '', UsuarioNivel.MEDICO )})
+                else if (email == 'paciente@teste.com' && senha == '123456')
+                    resolve({sucesso:true, usuario:new Usuario(2, 'Paciente', 'paciente@teste.com', '', UsuarioNivel.PACIENTE )})
                 resolve({sucesso: false});
             }, 1000) 
             

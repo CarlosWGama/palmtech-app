@@ -1,20 +1,18 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
-import { AppBackground, AppHeader, AppContainer, AppBackButton, fontPadrao } from '../../../../themes/theme'; 
+import { AppBackground, AppContainer, AppBackButton, fontPadrao } from '../../../../../themes/theme'; 
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Paciente } from '../../../../models/paciente';
 import { Card, CardInfo, Opcao } from './components';
 import moment from 'moment';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { Toast } from '../../../../themes/global/util';
-import { PacienteService } from '../../../../services/paciente.service';
+import { Toast } from '../../../../../themes/global/util';
+import { PacienteService } from '../../../../../services/paciente.service';
 
 export function PacienteScreen () {
 
     //navigation
     const nav = useNavigation()
     const route = useRoute()
-    const [paciente, setPaciente] = React.useState(route.params.paciente)
+    const [paciente, setPaciente] = React.useState(route.params?.paciente)
     // const [paciente, setPaciente] = React.useState(new Paciente('João', '2000-01-01', 1))
 
     //Remover
@@ -52,7 +50,7 @@ export function PacienteScreen () {
                 <Text style={[style.titulo, fontPadrao.negrito]}>Opções</Text>
                 {/* OPÇÕES */}
                 <View style={style.opcoes}>
-                    <Opcao texto="Editar" icon="ios-create" color="#519839" onPress={() => console.log('Editar')}/>
+                    <Opcao texto="Editar" icon="ios-create" color="#519839" onPress={() => nav.navigate('paciente-edicao', {paciente})}/>
                     <Opcao texto="Fotos" icon="ios-camera" color="#055a8c" onPress={() => console.log('Editar')}/>
                     <Opcao texto="Remover" icon="ios-trash" color="#b04632" onPress={remover}/>
                 </View>

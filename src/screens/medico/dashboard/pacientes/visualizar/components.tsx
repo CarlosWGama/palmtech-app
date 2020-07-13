@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import * as Colors from './../../../../themes/colors';
-import { fontPadrao } from '../../../../themes/theme';
+import * as Colors from './../../../../../themes/colors';
+import { fontPadrao } from '../../../../../themes/theme';
 import { Ionicons } from '@expo/vector-icons';
 
 export interface MainCardProps {
