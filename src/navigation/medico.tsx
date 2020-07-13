@@ -6,7 +6,7 @@ import { DashboardScreen } from './../screens/medico/dashboard';
 import { PacienteEdicaoScreen } from './../screens/medico/dashboard/pacientes/editar';
 import { PacienteScreen } from './../screens/medico/dashboard/pacientes/visualizar';
 import * as Colors from '../themes/colors';
-import { ConfiguracoesScreen } from '../screens/medico/configuracoes';
+import { MedicoConfigScreen } from '../screens/medico/configuracoes';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 export const MainTabNavigator = () => (
     <Tab.Navigator tabBarOptions={{activeBackgroundColor:Colors.LIGHT, activeTintColor:  "white"}}>
         <Tab.Screen name="dashboard" component={DashboardScreen} options={{title:"Pacientes", tabBarIcon: () => <Ionicons name="ios-people" size={32} color={Colors.TERTIARY} />}}   />
-        <Tab.Screen name="configuracoes" component={ConfiguracoesScreen} options={{title:"Configurações", tabBarIcon: () => <Ionicons name="ios-settings" size={32} color={Colors.TERTIARY} />}}  />
+        <Tab.Screen name="configuracoes" component={MedicoConfigScreen} options={{title:"Configurações", tabBarIcon: () => <Ionicons name="ios-settings" size={32} color={Colors.TERTIARY} />}}  />
     </Tab.Navigator>
 )
 

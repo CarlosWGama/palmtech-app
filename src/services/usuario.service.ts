@@ -19,10 +19,22 @@ const UsuarioService = {
     },
 
     /** Cadastra um usuário */
-    cadastrar: (dados): Promise<{sucesso: boolean, erro?:string}> => {
+    cadastrar: (usuario: Usuario): Promise<{sucesso: boolean, erro?:string}> => {
         return new Promise(resolve => {
             setTimeout(() => {
-                if (dados.email != 'teste@teste.com')
+                if (usuario.email != 'teste@teste.com')
+                    resolve({sucesso: true})
+                else resolve({sucesso: false, erro: 'Usuário já cadastrado'});
+            }, 1000) 
+            
+        })
+    },
+
+    /** Atualiza o perfil do usuário */  
+    editar: (usuario: Usuario): Promise<{sucesso: boolean, erro?:string}> => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                if (usuario.email != 'teste@teste.com')
                     resolve({sucesso: true})
                 else resolve({sucesso: false, erro: 'Usuário já cadastrado'});
             }, 1000) 
