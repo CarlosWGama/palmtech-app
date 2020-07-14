@@ -80,7 +80,7 @@ export const AppBackButton = (props:{backScreen?:string}) => {
 export function AppHeaderBackground (props:{children:any}) {
 
     return (
-      <View style={{position: 'absolute', top: 0, width: '100%', height: 230}}>
+      <View style={{width: '100%', height: 230}}>
             <Image source={require('./../assets/imgs/topo2.png')} style={{width: '100%', height: '100%', position:'absolute'}} resizeMode="stretch"/>
             <View style={{paddingTop: 50, paddingHorizontal: 20, flexDirection: 'row', justifyContent:'space-between'}}>
                 {props.children}

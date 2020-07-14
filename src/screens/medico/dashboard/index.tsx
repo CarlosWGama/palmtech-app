@@ -50,13 +50,13 @@ export function DashboardScreen () {
                 </TouchableOpacity>
             </View>
         </AppHeaderBackground>
-        <AppContainer verticalAlign="flex-start" horizontalAlign="stretch"> 
+        <AppContainer verticalAlign="flex-start" horizontalAlign="stretch" noMarginTop> 
           <View style={style.container}>
             
             {/* OPÇÕES */}
             <View style={{flexDirection:'row', justifyContent:'center'}}>
               <OpcHeader texto="Cadastrar paciente" icon="md-person-add" onPress={() => nav.navigate('paciente-edicao')} />
-              <OpcHeader texto="Foto " icon="md-camera" onPress={() => console.log('A')} />
+              <OpcHeader texto="Últimas fotos " icon="md-camera" onPress={() => nav.navigate('ultimas-fotos')} />
             </View>
 
             {/* PACIENTES */}
@@ -79,6 +79,6 @@ export function DashboardScreen () {
 }
 
 const style = StyleSheet.create({
-    container: {flex:1, paddingHorizontal: 20, paddingTop: 50, justifyContent:'flex-start'},
+    container: {flex:1, paddingHorizontal: 20, marginTop: -80, justifyContent:'flex-start'},
     texto: {color:'white', fontSize:20},
 })
