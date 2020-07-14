@@ -61,7 +61,7 @@ export function FotosPacienteScreen () {
                 data={fotos}
                 extraData={fotos}
                 keyExtractor={(item) => String(item.id)}
-                renderItem={ ({item}) => <ItemFoto foto={item} onPress={() => console.log('A')}/> }
+                renderItem={ ({item}) => <ItemFoto foto={item} onPress={() => nav.navigate('paciente-foto', {foto:item})}/> }
             />
 
             {/* BOTão PARA CARREGAR MAIS  */}

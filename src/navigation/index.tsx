@@ -12,8 +12,8 @@ export default function Navigation() {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false, animationEnabled:true}} >
-                <Stack.Screen component={MedicoNavigator} name="medico" options={{cardStyleInterpolator:CardStyleInterpolators.forRevealFromBottomAndroid}}/>
                 <Stack.Screen component={LoginScreen} name="login"/>
+                <Stack.Screen component={MedicoNavigator} name="medico" options={{cardStyleInterpolator:CardStyleInterpolators.forRevealFromBottomAndroid}}/>
                 <Stack.Screen component={RecuperarSenhaScreen} name="recuperar-senha" options={{cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS}}/>
                 <Stack.Screen component={CadastroScreen} name="cadastro" options={{cardStyleInterpolator:CardStyleInterpolators.forVerticalIOS}}/>
             </Stack.Navigator>

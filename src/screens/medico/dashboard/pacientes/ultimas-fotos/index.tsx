@@ -5,8 +5,12 @@ import { PacienteService } from '../../../../../services/paciente.service';
 import { Foto } from '../../../../../models/foto';
 import { FlatList } from 'react-native-gesture-handler';
 import { ItemFoto } from './components';
+import { useNavigation } from '@react-navigation/native';
 
 export function UltimasFotosScreen () {
+
+    //navigation
+    const nav = useNavigation()
 
     //Buscando
     const [carregando, setCarregando] = React.useState(true);
@@ -18,8 +22,6 @@ export function UltimasFotosScreen () {
     const buscarMais = async () => {
         setCarregando(true)
         const proximas = await PacienteService.ultimasFotos(inicio, totalBusca);
-        console.log(proximas);
-        console.log(proximas.concat(fotos));
         //Atualiza
         setFotos(fotos.concat(proximas))
         setInicio(inicio + totalBusca)
@@ -55,7 +57,7 @@ export function UltimasFotosScreen () {
                 data={fotos}
                 extraData={fotos}
                 keyExtractor={(item) => String(item.id)}
-                renderItem={ ({item}) => <ItemFoto foto={item} onPress={() => console.log('A')}/> }
+                renderItem={ ({item}) => <ItemFoto foto={item} onPress={() => nav.navigate('paciente-foto', {foto:item})} />}
             />
 
             {/* BOTão PARA CARREGAR MAIS  */}
