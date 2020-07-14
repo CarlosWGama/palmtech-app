@@ -8,6 +8,7 @@ import { PacienteScreen } from './../screens/medico/dashboard/pacientes/visualiz
 import * as Colors from '../themes/colors';
 import { MedicoConfigScreen } from '../screens/medico/configuracoes';
 import { UltimasFotosScreen } from '../screens/medico/dashboard/pacientes/ultimas-fotos';
+import { FotosPacienteScreen } from '../screens/medico/dashboard/pacientes/fotos-paciente';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -27,6 +28,7 @@ export const MedicoNavigator = () => (
         <Stack.Screen name="tab" component={MainTabNavigator}  />
         {/* FORA DA TAB */}
         <Stack.Screen name="ultimas-fotos" component={UltimasFotosScreen} options={{cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS}}/>
+        <Stack.Screen name="paciente-fotos" component={FotosPacienteScreen} options={{cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS}}/>
         <Stack.Screen name="paciente-visualizar" component={PacienteScreen} options={{cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS}}/>
         <Stack.Screen name="paciente-edicao" component={PacienteEdicaoScreen} options={{cardStyleInterpolator:CardStyleInterpolators.forHorizontalIOS}}/>
     </Stack.Navigator>

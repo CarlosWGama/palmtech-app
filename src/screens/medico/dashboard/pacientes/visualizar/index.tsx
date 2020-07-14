@@ -12,9 +12,9 @@ export function PacienteScreen () {
     //navigation
     const nav = useNavigation()
     const route = useRoute()
-    const [paciente, setPaciente] = React.useState(route.params?.paciente)
-    // const [paciente, setPaciente] = React.useState(new Paciente('João', '2000-01-01', 1))
-
+    //@ts-ignore
+    const paciente = route.params?.paciente
+    
     //Remover
     const remover = async () => {
         Alert.alert('Remover Paciente', 'Deseja realmente remover esse paciente? Essa ação não poderá ser desfeita', [
@@ -51,7 +51,7 @@ export function PacienteScreen () {
                 {/* OPÇÕES */}
                 <View style={style.opcoes}>
                     <Opcao texto="Editar" icon="ios-create" color="#519839" onPress={() => nav.navigate('paciente-edicao', {paciente})}/>
-                    <Opcao texto="Fotos" icon="ios-camera" color="#055a8c" onPress={() => console.log('Editar')}/>
+                    <Opcao texto="Fotos" icon="ios-camera" color="#055a8c" onPress={() => nav.navigate('paciente-fotos', {paciente})}/>
                     <Opcao texto="Remover" icon="ios-trash" color="#b04632" onPress={remover}/>
                 </View>
             </Card>
