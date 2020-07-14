@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
-import { AppMain, AppHeader, AppContainer, fontPadrao } from '../../../themes/theme'; 
-import { Header, OpcHeader, CardPaciente } from './components';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { AppMain, AppContainer, fontPadrao, AppHeaderBackground } from '../../../themes/theme'; 
+import { OpcHeader, CardPaciente } from './components';
 import { PacienteService } from '../../../services/paciente.service';
 import { Paciente } from '../../../models/paciente';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector} from 'react-redux';
+import { rdDeslogar } from '../../../store/usuarios/actions';
 
 export function DashboardScreen () {
 
@@ -21,10 +23,33 @@ export function DashboardScreen () {
       init();
     }, [])
 
+
+    //Deslogar usuário
+    const dispatch = useDispatch();
+    const usuarioLogado = useSelector(state => state.usuario);
+
+    //Botão de deslogar
+    const deslogar = () => {
+        dispatch(rdDeslogar())
+        nav.navigate('login')
+    }
+
     return (
       <AppMain>
         {/* <ScrollView style={{width:'100%'}}> */}
-        <Header/>
+        <AppHeaderBackground>
+           {/* Esquerda */}
+           <View>
+                <Text style={[style.texto, fontPadrao.regular]}>BEM VINDO</Text>
+                <Text style={[style.texto, fontPadrao.negrito]}>{usuarioLogado.nome}</Text>
+            </View>
+            {/* Direita */}
+            <View>
+                <TouchableOpacity onPress={deslogar}>
+                    <Text style={[style.texto, fontPadrao.regular]}>SAIR</Text>
+                </TouchableOpacity>
+            </View>
+        </AppHeaderBackground>
         <AppContainer verticalAlign="flex-start" horizontalAlign="stretch"> 
           <View style={style.container}>
             
@@ -54,5 +79,6 @@ export function DashboardScreen () {
 }
 
 const style = StyleSheet.create({
-    container: {flex:1, paddingHorizontal: 20, paddingTop: 50, justifyContent:'flex-start'}
+    container: {flex:1, paddingHorizontal: 20, paddingTop: 50, justifyContent:'flex-start'},
+    texto: {color:'white', fontSize:20},
 })

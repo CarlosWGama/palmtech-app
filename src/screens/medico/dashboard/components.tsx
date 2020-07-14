@@ -1,52 +1,11 @@
 import * as React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { AppMain, fontPadrao } from '../../../themes/theme'; 
-import { useNavigation } from '@react-navigation/native';
-import { useSelector, useDispatch } from 'react-redux';
-import { rdDeslogar } from './../../../store/usuarios/actions';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { fontPadrao } from '../../../themes/theme'; 
 import * as Colors from './../../../themes/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { Paciente } from '../../../models/paciente';
 import moment from 'moment';
 
-export function Header (props:any) {
-
-    const nav = useNavigation();
-    const dispatch = useDispatch();
-    const usuarioLogado = useSelector(state => state.usuario);
-
-    //Botão de deslogar
-    const deslogar = () => {
-        dispatch(rdDeslogar())
-        nav.navigate('login')
-    }
-
-    return (
-      <View style={styleHeader.component}>
-            <Image source={require('./../../../assets/imgs/topo2.png')} style={styleHeader.background} resizeMode="stretch"/>
-            <View style={styleHeader.container}>
-                {/* Esquerda */}
-                <View>
-                    <Text style={[styleHeader.texto, fontPadrao.regular]}>BEM VINDO</Text>
-                    <Text style={[styleHeader.texto, fontPadrao.negrito]}>{usuarioLogado.nome}</Text>
-                </View>
-                {/* Direita */}
-                <View>
-                    <TouchableOpacity onPress={deslogar}>
-                        <Text style={[styleHeader.texto, fontPadrao.regular]}>SAIR</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-      </View>
-    );
-}
-
-const styleHeader = StyleSheet.create({
-    component: {position: 'absolute', top: 0, width: '100%', height: 230},
-    container: {paddingTop: 50, paddingHorizontal: 20, flexDirection: 'row', justifyContent:'space-between'},
-    texto: {color:'white', fontSize:20},
-    background: {width: '100%', height: '100%', position:'absolute'}
-})
 // =============================================================================================================
 export function OpcHeader(props:{icon:string, texto:string, onPress:any}) {
     return (
