@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { AppMain, AppContainer, AppHeaderBackground, AppBackButton, fontPadrao, AppButton } from '../../../../../themes/theme'; 
-import { PacienteService } from '../../../../../services/paciente.service';
 import { Foto } from '../../../../../models/foto';
 import { FlatList } from 'react-native-gesture-handler';
 import { ItemFoto } from './components';
 import { useNavigation } from '@react-navigation/native';
+import { FotoService } from '../../../../../services/foto.service';
 
 export function UltimasFotosScreen () {
 
@@ -21,7 +21,7 @@ export function UltimasFotosScreen () {
 
     const buscarMais = async () => {
         setCarregando(true)
-        const proximas = await PacienteService.ultimasFotos(inicio, totalBusca);
+        const proximas = await FotoService.ultimasFotos(inicio, totalBusca);
         //Atualiza
         setFotos(fotos.concat(proximas))
         setInicio(inicio + totalBusca)

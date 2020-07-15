@@ -1,9 +1,9 @@
 import { InitialState } from "@react-navigation/native"
+import UsuarioService from "../../services/usuario.service";
+import { Usuario } from "../../models/usuario";
 
 //Dados iniciais
-const initialState = { 
-    nome: 'teste', id: 0, email: 'teste@teste.com'
-}
+const initialState = new Usuario()
 
 export const usuarioReducer = (state = initialState, action: {type:string, payload?:any}) => {
     switch (action.type) {
@@ -12,7 +12,8 @@ export const usuarioReducer = (state = initialState, action: {type:string, paylo
             return state;
         
         case 'LIBERAR':
-            state = {nome:'', id: 0, email: ''};
+            UsuarioService.logout()
+            state = new Usuario();
             return state
         default: return state; 
     }

@@ -1,4 +1,5 @@
 import { Usuario, UsuarioNivel } from "../models/usuario";
+import AsyncStorage from '@react-native-community/async-storage';
 
 /** Service que controla o acesso aos dados do usuário */
 const UsuarioService = {
@@ -7,15 +8,22 @@ const UsuarioService = {
     login: (email: string, senha: string): Promise<{sucesso: boolean, usuario?:Usuario}> => {
         return new Promise(resolve => {
             setTimeout(() => {
+                let usuario: Usuario|null = null 
                 if (email == 'medico@teste.com' && senha == '123456')
-                    resolve({sucesso:true, usuario:new Usuario(1, 'Médico', 'medico@teste.com', '', UsuarioNivel.MEDICO )})
+                    usuario = new Usuario(1, 'Médico', 'medico@teste.com', '', '1990-01-01', UsuarioNivel.MEDICO )
                 else if (email == 'paciente@teste.com' && senha == '123456')
-                    resolve({sucesso:true, usuario:new Usuario(2, 'Paciente', 'paciente@teste.com', '', UsuarioNivel.PACIENTE )})
-                resolve({sucesso: false});
+                    usuario = new Usuario(2, 'Paciente', 'paciente@teste.com', '', '1990-01-01', UsuarioNivel.PACIENTE )
+               
+                //Salva o usuário logado
+                if (usuario) {
+                    AsyncStorage.setItem('usuario', JSON.stringify(usuario));
+                    AsyncStorage.setItem('jwt', JSON.stringify(usuario));
+                } 
+
+                //@ts-ignore
+                resolve({sucesso: usuario != null, usuario});
             }, 1000) 
-            
         })
-         
     },
 
     /** Cadastra um usuário */
@@ -56,10 +64,8 @@ const UsuarioService = {
 
     /** Desloga o usuário */
     logout: () => {
-
-    }
+        AsyncStorage.clear()
+    }   
 }
-
-
 
 export default UsuarioService;

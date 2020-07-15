@@ -7,6 +7,7 @@ import { Paciente } from '../../../models/paciente';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector} from 'react-redux';
 import { rdDeslogar } from '../../../store/usuarios/actions';
+import UsuarioService from '../../../services/usuario.service';
 
 export function DashboardScreen () {
 

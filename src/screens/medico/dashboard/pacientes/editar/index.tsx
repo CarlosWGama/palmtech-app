@@ -18,6 +18,7 @@ export function PacienteEdicaoScreen () {
     const route = useRoute();
     
     //Paciente 
+    //@ts-ignore
     const [paciente, setPaciente] = React.useState<Paciente>(Object.assign(new Paciente, route.params?.paciente))
     const dataNascimento = new Date(paciente.dataNascimento != undefined ? paciente.dataNascimento : new Date())
     
@@ -36,7 +37,7 @@ export function PacienteEdicaoScreen () {
         } else setErro(String(resposta.erro))
 
       } else { //Edição
-        const resposta = await PacienteService.cadastrar(paciente);
+        const resposta = await PacienteService.editar(paciente);
         if (resposta.sucesso) Toast('Edição realizada com sucesso')
         else setErro(String(resposta.erro))
       }    
