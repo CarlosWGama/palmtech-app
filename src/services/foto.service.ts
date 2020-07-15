@@ -74,4 +74,13 @@ export const FotoService = {
             }, 1000)
         });
     },
+
+    //Cadastra a foto de um pé
+    cadastrar(foto): Promise<{sucesso:boolean, erro?: string}> {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve({sucesso: true})
+            }, 1000)
+        });
+    }
 }
