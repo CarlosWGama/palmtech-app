@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export interface InformacoesProps {
   onConfirmar:any;
+  titulo?:string
   foto: any;
 }
 
@@ -14,7 +15,7 @@ export function ItemInformacoes (props: InformacoesProps) {
     return (
       <View style={styleInf.container}>
          {/* TITULO */}
-        <Text style={[styleInf.titulo, fontPadrao.negrito]}>INSTRUÇÕES</Text>
+        <Text style={[styleInf.titulo, fontPadrao.negrito]}>INSTRUÇÕES - {props.titulo}</Text>
 
         <View style={{padding: 10}}>
           {/* DESCRIÇÃO */}
@@ -123,7 +124,7 @@ export interface ConfirmarFotoProps {
   onConfirmar:any;
   onTentarNovamente: any;
   fotoExemplo:any;
-  fotoTirada: string;
+  fotoTirada: any;
 }
 
 export function ItemConfirmarFoto (props: ConfirmarFotoProps) {

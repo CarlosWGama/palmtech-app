@@ -22,9 +22,22 @@ export function PacienteFotoScreen () {
     setImagemIndice(posicao)
     setVisivel(true)
   } 
-  const imagens = [{uri: foto.esquerda}, {uri: foto.direita}, {uri: foto.inferior}]
+  let reduz = 0;
+  const imagens: {uri:string}[] = []
+  //Adiciona fotos do pé esquerdo
+  if (foto.esquerdo_p1) {
+    imagens.push({uri: foto.esquerdo_p1})
+    imagens.push({uri: foto.esquerdo_p2})
+    imagens.push({uri: foto.esquerdo_p3})
+  } else reduz = 3
+  //Adiciona fotos do pé direito
+  if (foto.direito_p1) {
+    imagens.push({uri: foto.direito_p1})
+    imagens.push({uri: foto.direito_p2})
+    imagens.push({uri: foto.direito_p3})
+  }
 
-    return (
+  return (
       <AppMain>
         <AppHeader titulo={"Foto - #" + foto.id}  backButton/>
         <AppContainer verticalAlign="flex-start">
@@ -37,9 +50,15 @@ export function PacienteFotoScreen () {
 
           {/* FOTOS */}
           <ScrollView>
-            <FotoItem descricao="Visão Esquerda" imagem={foto.esquerda} onPress={() => abrirGaleria(0)} />
-            <FotoItem descricao="Visão Direita" imagem={foto.direita}  onPress={() => abrirGaleria(1)} />
-            <FotoItem descricao="Visão Inferior" imagem={foto.inferior}  onPress={() => abrirGaleria(2)} />
+            {/* PÉ ESQUERDO */}
+            {foto.esquerdo_p1 && <FotoItem descricao="Pé Esquerdo - Posição 1" imagem={foto.esquerdo_p1} onPress={() => abrirGaleria(0)} />}
+            {foto.esquerdo_p2 && <FotoItem descricao="Pé Esquerdo - Posição 2" imagem={foto.esquerdo_p2} onPress={() => abrirGaleria(1)} />}
+            {foto.esquerdo_p3 && <FotoItem descricao="Pé Esquerdo - Posição 3" imagem={foto.esquerdo_p3} onPress={() => abrirGaleria(2)} />}
+            {/* PÉ DIREITO */}
+            {foto.direito_p1 && <FotoItem descricao="Pé Direito - Posição 1" imagem={foto.direito_p1} onPress={() => abrirGaleria(3-reduz)} />}
+            {foto.direito_p2 && <FotoItem descricao="Pé Direito - Posição 2" imagem={foto.direito_p2} onPress={() => abrirGaleria(4-reduz)} />}
+            {foto.direito_p3 && <FotoItem descricao="Pé Direito - Posição 3" imagem={foto.direito_p3} onPress={() => abrirGaleria(5-reduz)} />}
+            
           </ScrollView>
 
           {/* VISUALIZADOR DE IMAGENS */}
