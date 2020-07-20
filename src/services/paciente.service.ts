@@ -1,6 +1,6 @@
 import { Paciente } from "../models/paciente";
 import { Foto } from "../models/foto";
-import api, { autenticado } from "./api.service";
+import api, { autenticado, limpaObjeto } from "./api.service";
 
 export const PacienteService = {
 
@@ -29,6 +29,8 @@ export const PacienteService = {
     //Cadastrar um paciente
     cadastrar: async(paciente: Paciente): Promise<{sucesso:boolean, erro?: string}> => {
         try {
+            //@ts-ignore
+            paciente = limpaObjeto(paciente)
             const response = await api.post('/pacientes', {paciente})
             if (response.status == 201)
                 return {sucesso: true}

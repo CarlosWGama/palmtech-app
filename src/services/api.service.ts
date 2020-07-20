@@ -12,6 +12,15 @@ export async function autenticado() {
     return api;
 }
 
+/** REMOVE UNDEFINIED E OUTROS */
+export async function limpaObjeto(obj) {
+    Object.keys(obj).forEach(key => {
+        if (obj[key] && typeof obj[key] === 'object') limpaObjeto(obj[key]);
+        else if (obj[key] === undefined) delete obj[key];
+    });
+    return obj;
+}
+
 
 export default api;
 

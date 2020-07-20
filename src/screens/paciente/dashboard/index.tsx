@@ -24,18 +24,23 @@ export function PacienteDashboardScreen () {
     const buscarMais = async () => {
         setCarregando(true)
         const proximas = await FotoService.minhasFotos(inicio, totalBusca);
-       
+        
         //Atualiza
         setFotos(fotos.concat(proximas))
         setInicio(inicio + totalBusca)
         setCarregando(false)
-
         //Acabou as fotos
         setFim(proximas.length == 0)
     }
 
     React.useEffect(() => {
-      buscarMais()
+      setFotos([]);
+      nav.addListener('focus', () => {
+        setInicio(0);
+        setFim(false);
+        setFotos([]);
+        buscarMais()
+      })
     }, [])
 
 

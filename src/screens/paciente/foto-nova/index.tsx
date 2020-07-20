@@ -50,8 +50,8 @@ export function PacienteFotoNovaScreen () {
       else if (posicao == 2)foto.esquerdo_p2 = imagem
       else if (posicao == 3)foto.esquerdo_p3 = imagem
       else if (posicao == 4)foto.direito_p1 = imagem
-      else if (posicao == 5)foto.direito_p1 = imagem
-      else if (posicao == 6)foto.direito_p1 = imagem
+      else if (posicao == 5)foto.direito_p2 = imagem
+      else if (posicao == 6)foto.direito_p3 = imagem
       
       setFoto(foto)
       setAba(aba+1)
@@ -60,7 +60,7 @@ export function PacienteFotoNovaScreen () {
     //Salvar
     const [erro, setErro] = React.useState<string|null>(null)
     const salvar = async () => {
-      setAba(aba+1)
+      setAba(21)
       const resposta = await FotoService.cadastrar(foto);
       if (resposta.sucesso) {
         Toast("Foto enviada")
@@ -86,8 +86,8 @@ export function PacienteFotoNovaScreen () {
               <Text style={[style.texto, fontPadrao.regular]}>Caso deseje tirar foto do pé ESQUERDO, clique em TIRAR FOTO.</Text>
               <Text style={[style.texto, fontPadrao.regular]}>Caso deseje avançar para o pé direito, clique em PULAR</Text>
               <View style={{flexDirection: 'row',}}>
-                <AppButton title="TIRAR FOTO" style={{flex:1, borderRadius:0}} color={Colors.TERTIARY} onPress={() => setAba(aba+1)} />
-                <AppButton title="PULAR" style={{flex:1, borderRadius:0}}  onPress={() => { pular("esquerdo") }} />
+                <AppButton title="PULAR" style={{flex:1, borderRadius:0}}  color={Colors.TERTIARY} onPress={() => { pular("esquerdo") }} />
+                <AppButton title="TIRAR FOTO" style={{flex:1, borderRadius:0}}  onPress={() => setAba(aba+1)} />
               </View>
             </View>}
 
@@ -127,9 +127,9 @@ export function PacienteFotoNovaScreen () {
               <Text style={[style.texto, fontPadrao.regular]}>Caso deseje tirar foto do pé DIREITO, clique em TIRAR FOTO.</Text>
               { !pularPeEsquerdo && <Text style={[style.texto, fontPadrao.regular]}>Caso deseje finalizar, clique em PULAR</Text>}
               <View style={{flexDirection: 'row'}}>
-                <AppButton title="TIRAR FOTO" style={{flex:1, borderRadius:0}} color={Colors.TERTIARY} onPress={() => setAba(aba+1)} />
                 {/* SÓ PODE PULAR DIREITO SE NÃO PULOU ESQUERDO */}
-                {!pularPeEsquerdo && <AppButton title="PULAR" style={{flex:1, borderRadius:0}} onPress={() => { pular("direito") }} />}
+                {!pularPeEsquerdo && <AppButton title="PULAR" style={{flex:1, borderRadius:0}}  color={Colors.TERTIARY} onPress={() => { pular("direito") }} />}
+                <AppButton title="TIRAR FOTO" style={{flex:1, borderRadius:0}} onPress={() => setAba(aba+1)} />
               </View>
             </View>}
 
@@ -173,7 +173,7 @@ export function PacienteFotoNovaScreen () {
               </View>}
 
             {/* FINALIZADO */}
-            {aba == 10 && erro &&
+            {aba == 21 && erro &&
               <View style={style.fim}>
                 <Text style={[fontPadrao.regular, {color:'red'}]}>{erro}</Text>
               </View>}

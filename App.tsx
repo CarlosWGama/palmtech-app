@@ -16,19 +16,19 @@ import * as Updates from 'expo-updates';
 export default () => {
 
     const [estaAtualizacao, setEstaAtualizacao] = useState(false);
-    // useEffect(() => {
-    //      setEstaAtualizacao(true);
-    //     //Busca por atualizações
-    //     const update = async () => {
-    //         const update = await Updates.checkForUpdateAsync();
-    //         if (update.isAvailable) {
-    //           await Updates.fetchUpdateAsync();
-    //           await Updates.reloadAsync();
-    //         }
-    //         setEstaAtualizacao(false);
-    //     }
-    //     update();
-    // })
+    useEffect(() => {
+         setEstaAtualizacao(true);
+        //Busca por atualizações
+        const update = async () => {
+            const update = await Updates.checkForUpdateAsync();
+            if (update.isAvailable) {
+              await Updates.fetchUpdateAsync();
+              await Updates.reloadAsync();
+            }
+            setEstaAtualizacao(false);
+        }
+        update();
+    })
 
     //Carregando Fonte
     let [fontsLoaded] = useFonts({

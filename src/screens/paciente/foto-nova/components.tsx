@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, Platform, ActivityIndicator } from 'react-native';
 import { AppMain, fontPadrao, AppButton } from '../../../themes/theme'; 
 import * as Colors from './../../../themes/colors';
 import { Camera } from 'expo-camera';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as ImageManipulator from "expo-image-manipulator";
 
 export interface InformacoesProps {
   onConfirmar:any;
@@ -51,6 +52,7 @@ export function ItemTirarFoto (props: TirarFotoProps) {
     //Habilita o Grid
     const [grid, setGrid] = React.useState(false)
     const [camera, setCamera] = React.useState<any>(null);
+    const [carregando, setCarregando] = React.useState(false);
 
     //Verifica permissão de uso da Camera
     const [temPermissao, setTemPermissao] = React.useState(false);
@@ -69,11 +71,23 @@ export function ItemTirarFoto (props: TirarFotoProps) {
 
     //Tira Foto
     const tirarFoto = async() => {
+      setCarregando(true);
+
+      //Tira a foto  
       let foto = await camera.takePictureAsync({
-        quality: 0.3,
+        quality: 1,
         base64: true
       })
-      const imagem = 'data:image/jpg;base64,' +foto.base64;
+      let imagem = 'data:image/jpg;base64,' +foto.base64;
+
+      //Redimensiona a foto
+      const imageResult = await ImageManipulator.manipulateAsync(imagem, 
+        [{resize:{width: 524, height: 524}}],
+        { compress: 1, format: ImageManipulator.SaveFormat.JPEG, base64: true }
+      );
+      imagem = 'data:image/jpg;base64,' +imageResult.base64;
+      
+      setCarregando(false);
       props.onConfirmar(imagem);
     }
 
@@ -88,7 +102,7 @@ export function ItemTirarFoto (props: TirarFotoProps) {
           {!temPermissao && <Text style={[fontPadrao.regular]}>Não é possível tirar foto, pois não permissão de acesso a câmera</Text>}
         
           {temPermissao &&
-            <Camera style={{ flex: 1 }} type={Camera.Constants.Type.back} ref={ref => setCamera(ref)}>
+            <Camera style={{ flex: 1 }} ratio={'1:1'} type={Camera.Constants.Type.back} ref={ref => setCamera(ref)}>
               <View
                 style={{
                   flex: 1,
@@ -108,7 +122,8 @@ export function ItemTirarFoto (props: TirarFotoProps) {
         {/* BOTÕES */}
         {temPermissao && <View style={styleTF.botoes}>
             <AppButton title="USAR GUIA" style={{borderRadius:0, width:'50%'}} color={Colors.SECONDARY} onPress={() => setGrid(!grid)}/>
-            <AppButton title="CONFIRMAR" style={{borderRadius:0, width:'50%'}} onPress={tirarFoto}/>
+            {carregando && <View style={{width:'50%', justifyContent:'center'}}><ActivityIndicator /></View>}
+            {!carregando && <AppButton title="CONFIRMAR" style={{borderRadius:0, width:'50%'}} onPress={tirarFoto}/>}
         </View> }
       </View>
     );
