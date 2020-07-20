@@ -41,9 +41,10 @@ export const Formulario = () => {
     const logar = async (dados) => {
         setErroLogin(false);
         const resultado = await UsuarioService.login(dados.email, dados.senha)
+        console.log(resultado)
         if (resultado.sucesso) {    
             dispatch(rdLogar(resultado.usuario))
-            nav.navigate(resultado.usuario?.nivel == UsuarioNivel.MEDICO ? 'medico' : 'paciente')
+            nav.navigate(resultado.usuario?.medico ? 'medico' : 'paciente')
         }
         else setErroLogin(true);
     }

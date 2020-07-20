@@ -20,7 +20,7 @@ export function PacienteEdicaoScreen () {
     //Paciente 
     //@ts-ignore
     const [paciente, setPaciente] = React.useState<Paciente>(Object.assign(new Paciente, route.params?.paciente))
-    const dataNascimento = new Date(paciente.dataNascimento != undefined ? paciente.dataNascimento : new Date())
+    const data_nascimento = new Date(paciente.data_nascimento != undefined ? paciente.data_nascimento : new Date())
     
     //Edicao
     const [calendario, setCalendario] = React.useState(false);
@@ -29,7 +29,7 @@ export function PacienteEdicaoScreen () {
     const edicao = async (paciente: Paciente) => {
       setErro(null);
       console.log(paciente);
-      if (paciente.id == undefined) { //Cadastro
+      if (paciente.id == 0) { //Cadastro
         const resposta = await PacienteService.cadastrar(paciente);
         if (resposta.sucesso) {
           Toast('Cadastro realizado com sucesso')
@@ -46,7 +46,7 @@ export function PacienteEdicaoScreen () {
 
     return (
       <AppMain>
-        <AppHeader titulo={paciente.id == undefined ? 'Cadastro de Paciente' : 'Edição de Paciente'} backButton/>
+        <AppHeader titulo={paciente.id == 0 ? 'Cadastro de Paciente' : 'Edição de Paciente'} backButton/>
         <AppContainer verticalAlign="flex-start">
             <Formik
                   //Dados iniciais 
@@ -56,7 +56,7 @@ export function PacienteEdicaoScreen () {
                       nome: Yup.string().required('Nome obrigatório'),
                       email: Yup.string().required('Email obrigatório').email('Email inválido').required('Email obrigatório'),
                       senha: Yup.string().min(6, 'Pelo menos 6 caractetes'),
-                      dataNascimento: Yup.string().required('Data de nascimento obrigatório')
+                      data_nascimento: Yup.string().required('Data de nascimento obrigatório')
                   })}
                   //Envio
                   onSubmit={edicao}
@@ -85,7 +85,7 @@ export function PacienteEdicaoScreen () {
                           </AppInput>
 
                           {/* SENHA */}
-                          { paciente.id == undefined &&
+                          { paciente.id == 0 &&
                             <AppInput titulo="Senha" touched={touched.senha} error={errors.senha}>
                                 <TextInput 
                                     value={values.senha}
@@ -97,18 +97,18 @@ export function PacienteEdicaoScreen () {
                           }
 
                           {/* DATA DE NASCIMENTO */}
-                          <AppInput titulo="Data de Nascimento" touched={touched.dataNascimento} error={errors.dataNascimento} noBorder>
+                          <AppInput titulo="Data de Nascimento" touched={touched.data_nascimento} error={errors.data_nascimento} noBorder>
                             <TouchableOpacity onPress={() => setCalendario(true)}>
-                              <Text>{values.dataNascimento != undefined ? moment(values.dataNascimento).format('DD/MM/YYYY') : 'Clique para selecionar data'}</Text>
+                              <Text>{values.data_nascimento != 0 ? moment(values.data_nascimento).format('DD/MM/YYYY') : 'Clique para selecionar data'}</Text>
                             </TouchableOpacity>
                           </AppInput>
                           {calendario && 
                               <DateTimePicker 
-                                value={dataNascimento}
+                                value={data_nascimento}
                                 mode="date"
                                 onChange={(event, data) => {
                                   setCalendario(false);
-                                  setFieldValue('dataNascimento', moment(data).format('YYYY-MM-DD'))
+                                  setFieldValue('data_nascimento', moment(data).format('YYYY-MM-DD'))
                                 }}
                               />
                           }

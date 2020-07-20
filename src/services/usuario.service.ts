@@ -1,65 +1,53 @@
-import { Usuario, UsuarioNivel } from "../models/usuario";
+import { Usuario } from "../models/usuario";
 import AsyncStorage from '@react-native-community/async-storage';
+import api, { autenticado } from "./api.service";
 
 /** Service que controla o acesso aos dados do usuário */
 const UsuarioService = {
 
     /** Realiza o login do usuário */
-    login: (email: string, senha: string): Promise<{sucesso: boolean, usuario?:Usuario}> => {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                let usuario: Usuario|null = null 
-                if (email == 'medico@teste.com' && senha == '123456')
-                    usuario = new Usuario(1, 'Médico', 'medico@teste.com', '', '1990-01-01', UsuarioNivel.MEDICO )
-                else if (email == 'paciente@teste.com' && senha == '123456')
-                    usuario = new Usuario(2, 'Paciente', 'paciente@teste.com', '', '1990-01-01', UsuarioNivel.PACIENTE )
-               
-                //Salva o usuário logado
-                if (usuario) {
-                    AsyncStorage.setItem('usuario', JSON.stringify(usuario));
-                    AsyncStorage.setItem('jwt', JSON.stringify(usuario));
-                } 
-
-                //@ts-ignore
-                resolve({sucesso: usuario != null, usuario});
-            }, 1000) 
-        })
+    login: async (email: string, senha: string): Promise<{sucesso: boolean, usuario?:Usuario}> => {
+        try {
+            const response = await api.post('/login', {email, senha});
+            if (response.status == 200) {
+                AsyncStorage.setItem('jwt', response.data.jwt);
+                const usuario = Object.assign(new Usuario, response.data.usuario);
+                AsyncStorage.setItem('usuario', JSON.stringify(usuario));
+                return {sucesso: true, usuario }
+            }
+            return {sucesso: false}
+        } catch (erro) {
+            return {sucesso: false}
+        } 
     },
 
     /** Cadastra um usuário */
-    cadastrar: (usuario: Usuario): Promise<{sucesso: boolean, erro?:string}> => {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                if (usuario.email != 'teste@teste.com')
-                    resolve({sucesso: true})
-                else resolve({sucesso: false, erro: 'Usuário já cadastrado'});
-            }, 1000) 
-            
-        })
+    cadastrar: async (usuario: Usuario): Promise<{sucesso: boolean, erro?:string}> => {
+        const response = await api.post('/usuarios', {usuario})
+        if (response.status == 201)
+            return {sucesso: true}
+        return {sucesso: false, erro: response.data};
     },
 
     /** Atualiza o perfil do usuário */  
-    editar: (usuario: Usuario): Promise<{sucesso: boolean, erro?:string}> => {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                if (usuario.email != 'teste@teste.com')
-                    resolve({sucesso: true})
-                else resolve({sucesso: false, erro: 'Usuário já cadastrado'});
-            }, 1000) 
-            
-        })
+    editar: async (usuario: Usuario): Promise<{sucesso: boolean, erro?:string}> => {
+        const api = await autenticado();
+        try {
+            const response = api.put('/usuarios', {usuario})
+            return {sucesso: true}
+        } catch(erro) {
+            return {sucesso: false, erro}
+        }
     },
 
     /** Solicita a recuperação do email do usuário */
-    recuperarSenha: (email: string): Promise<{sucesso: boolean}> => {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                if (email == 'teste@teste.com')
-                    resolve({sucesso: true})
-                else resolve({sucesso: false});
-            }, 1000) 
-            
-        })
+    recuperarSenha: async (email: string): Promise<{sucesso: boolean}> => {
+        try {
+            const response = await api.put('/senha', {email})
+            return {sucesso: (response.status == 200)}
+        } catch (erro) {
+            return {sucesso: false};
+        }
     },
 
     /** Desloga o usuário */

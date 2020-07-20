@@ -10,7 +10,7 @@ import { rdAtualizarUsuario } from './../../../store/usuarios/actions';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import { PacienteService } from '../../../services/paciente.service';
+import UsuarioService from '../../../services/usuario.service';
 
 export function PacienteConfigScreen () {
 
@@ -24,7 +24,7 @@ export function PacienteConfigScreen () {
     const [erro, setErro] = React.useState<undefined|string>(undefined);
     const editarPerfil = async (dados: Usuario) => {
       setErro(undefined);
-      const resposta = await PacienteService.editar(dados);
+      const resposta = await UsuarioService.editar(dados);
       if (resposta.sucesso) {
         Toast('Atualizado com sucesso');
         dispatch(rdAtualizarUsuario(dados))
@@ -44,7 +44,7 @@ export function PacienteConfigScreen () {
                       nome: Yup.string().required('Nome obrigatório'),
                       email: Yup.string().required('Email obrigatório').email('Email inválido').required('Email obrigatório'),
                       senha: Yup.string().min(6, 'A nova senha deve possui pelo menos 6 caracteres'),
-                      dataNascimento: Yup.string().required('Data de Nascimento é obrigatório')
+                      data_nascimento: Yup.string().required('Data de Nascimento é obrigatório')
                   })}
                   //Envio
                   onSubmit={editarPerfil}
@@ -73,11 +73,11 @@ export function PacienteConfigScreen () {
 
                         {/* DATA DE NASCIMENTO */}
                         <AppInput titulo="Data de Nascimento" 
-                        touched={touched.dataNascimento} 
-                        error={errors.dataNascimento} 
+                        touched={touched.data_nascimento} 
+                        error={errors.data_nascimento} 
                       >
                         <TouchableOpacity onPress={() => setCalendario(true)}>
-                          <Text>{values.dataNascimento != undefined ? moment(values.dataNascimento).format('DD/MM/YYYY') : 'Clique para selecionar data'}</Text>
+                          <Text>{values.data_nascimento != undefined ? moment(values.data_nascimento).format('DD/MM/YYYY') : 'Clique para selecionar data'}</Text>
                         </TouchableOpacity>
                       </AppInput>
                       {calendario && 
@@ -86,7 +86,7 @@ export function PacienteConfigScreen () {
                             mode="date"
                             onChange={(event, data) => {
                               setCalendario(false);
-                              setFieldValue('dataNascimento', moment(data).format('YYYY-MM-DD'))
+                              setFieldValue('data_nascimento', moment(data).format('YYYY-MM-DD'))
                             }}
                           />
                       }

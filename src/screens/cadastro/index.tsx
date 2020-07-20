@@ -19,7 +19,6 @@ export function CadastroScreen () {
     const nav = useNavigation()
 
     const cadastrar = async (dados: Paciente, {resetForm}) => {
-        console.log(dados);
         setErro(null);
         const resposta = await PacienteService.cadastrar(dados);
         if (resposta.sucesso) {
@@ -34,7 +33,7 @@ export function CadastroScreen () {
     //View
     return (
       <AppMain horizontalAlign="stretch">
-        <AppHeader titulo="Cadastro de usuário" backButton/>
+        <AppHeader titulo="Cadastro de Paciente" backButton/>
 
         <AppContainer horizontalAlign="stretch" verticalAlign="flex-start">
  
@@ -46,14 +45,14 @@ export function CadastroScreen () {
                     nome: Yup.string().required('Nome obrigatório'),
                     email: Yup.string().required('Email obrigatório').email('Email inválido').required('Email obrigatório'),
                     senha: Yup.string().required('Senha obrigatória').min(6, 'Pelo menos 6 caractetes'),
-                    dataNascimento: Yup.string().required('Data de nascimento obrigatório')
+                    data_nascimento: Yup.string().required('Data de nascimento obrigatório')
                 })}
                 //Envio
                 onSubmit={cadastrar}
             >
                 {({errors, values, setFieldValue,  handleBlur, handleChange, handleSubmit, touched, isSubmitting}) => (
                     <View style={style.formulario}>
-                        <Text style={[style.titulo, fontPadrao.negrito]}>Cadastro de Usuário</Text>
+                        <Text style={[style.titulo, fontPadrao.negrito]}>Cadastro de Paciente</Text>
 
                         {/* NOME */}
                         <AppInput titulo="Nome" touched={touched.nome} error={errors.nome}>
@@ -73,11 +72,11 @@ export function CadastroScreen () {
 
                         {/* DATA DE NASCIMENTO */}
                         <AppInput titulo="Data de Nascimento" 
-                            touched={touched.dataNascimento} 
-                            error={errors.dataNascimento} 
+                            touched={touched.data_nascimento} 
+                            error={errors.data_nascimento} 
                         >
                             <TouchableOpacity onPress={() => setCalendario(true)}>
-                              <Text>{values.dataNascimento != undefined ? moment(values.dataNascimento).format('DD/MM/YYYY') : 'Clique para selecionar data'}</Text>
+                              <Text>{values.data_nascimento != undefined ? moment(values.data_nascimento).format('DD/MM/YYYY') : 'Clique para selecionar data'}</Text>
                             </TouchableOpacity>
                           </AppInput>
                           {calendario && 
@@ -86,7 +85,7 @@ export function CadastroScreen () {
                                 mode="date"
                                 onChange={(event, data) => {
                                   setCalendario(false);
-                                  setFieldValue('dataNascimento', moment(data).format('YYYY-MM-DD'))
+                                  setFieldValue('data_nascimento', moment(data).format('YYYY-MM-DD'))
                                 }}
                               />
                           }

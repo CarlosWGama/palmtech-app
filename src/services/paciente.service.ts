@@ -1,46 +1,51 @@
 import { Paciente } from "../models/paciente";
 import { Foto } from "../models/foto";
+import api, { autenticado } from "./api.service";
 
 export const PacienteService = {
 
     //Retorna a lista de todos os pacientes do usuário
-    buscarTodos(): Promise<Paciente[]> {
-        return new Promise(resolve => {
-            resolve([
-                new Paciente(1, 'Jose da Silva', '1974-01-12', 'jose@teste.com'),
-                new Paciente(2, 'Maria Costa', '1987-05-11', 'maria@teste.com'),
-                new Paciente(3, 'Josivaldo Pereira', '2001-02-15', 'josilvado@teste.com'),
-                new Paciente(4, 'Dina Lima', '1945-06-13', 'dina@teste.com'),
-                new Paciente(5, 'João Victor', '1959-07-23', 'joao@teste.com'),
-                new Paciente(6, 'Maxwell Pereira', '1964-02-12', 'maxwell@teste.com'),
-                new Paciente(7, 'Miguel Antonio', '1992-02-03', 'miguel@teste.com'),
-                new Paciente(8, 'Tulio Silva', '1972-04-03', 'tulio@teste.com'),
-            ])
+    buscarTodos: async (): Promise<Paciente[]> => {
+        const api = await autenticado();
+        const response = await api.get('/pacientes');
+        const pacientes: Paciente[] = [];
+        response.data.pacientes.forEach(p => {
+            pacientes.push(Object.assign(new Paciente, p))
         });
+        return pacientes;
     },
 
     //Remove um paciente
-    remover(paciente: Paciente): Promise<{sucesso:boolean}> {
-        return new Promise(resolve => {
-            resolve({sucesso:true})
-        });
+    remover: async (paciente: Paciente): Promise<{sucesso:boolean}> => {
+        const api = await autenticado();
+        try {
+            const response = api.delete(`/pacientes/${paciente.id}`);
+            return {sucesso: true}
+        } catch (e) {
+            return {sucesso: false}
+        }
     },
 
     //Cadastrar um paciente
-    cadastrar(paciente: Paciente): Promise<{sucesso:boolean, erro?: string}> {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve({sucesso:true})
-            }, 1000)
-        });
+    cadastrar: async(paciente: Paciente): Promise<{sucesso:boolean, erro?: string}> => {
+        try {
+            const response = await api.post('/pacientes', {paciente})
+            if (response.status == 201)
+                return {sucesso: true}
+            return {sucesso: false, erro: response.data};    
+        } catch (erro) {
+            return {sucesso: false, erro};
+        }
     },
 
     //Editar um paciente
-    editar(paciente: Paciente): Promise<{sucesso:boolean, erro?: string}> {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve({sucesso:true})
-            }, 1000)
-        });
+    editar: async (paciente: Paciente): Promise<{sucesso:boolean, erro?: string}> => {
+        try {
+            const response = await api.put(`/pacientes/${paciente.id}`, {paciente})
+            if (response.status == 200) return {sucesso: true}
+            return {sucesso: false, erro: response.data};    
+        } catch (erro) {
+            return {sucesso: false, erro};
+        }
     },
 }

@@ -20,7 +20,7 @@ export function InicialScreen () {
             if (resposta) {
                 const usuario = JSON.parse(resposta);
                 dispatch(rdLogar(usuario))
-                nav.navigate(usuario.nivel == UsuarioNivel.MEDICO ? 'medico' : 'paciente')
+                nav.navigate(usuario.medico ? 'medico' : 'paciente')
             } else {
                 nav.navigate('login');
             }

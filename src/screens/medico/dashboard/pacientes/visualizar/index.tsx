@@ -41,7 +41,7 @@ export function PacienteScreen () {
 
                 <CardInfo texto={paciente.id?.toString()} rotulo="Código" />
                 <CardInfo texto={paciente.nome} rotulo="Nome" />
-                <CardInfo texto={moment(paciente.dataNascimento).format('DD/MM/YYYY')} rotulo="Data de Nascimento" />
+                <CardInfo texto={moment(paciente.data_nascimento).format('DD/MM/YYYY')} rotulo="Data de Nascimento" />
             </Card>
 
 

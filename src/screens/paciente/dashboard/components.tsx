@@ -81,7 +81,7 @@ export function CardPaciente(props: {paciente:Paciente, onPress:any}) {
                 <View style={styleCard.container}>
                     <Text style={[fontPadrao.negrito]}>{props.paciente.id?.toString()}</Text>
                     <Text style={[fontPadrao.negrito]}>{props.paciente.nome}</Text>
-                    <Text style={[fontPadrao.negrito]}>{idade(props.paciente.dataNascimento) + ' Anos'}</Text>
+                    <Text style={[fontPadrao.negrito]}>{idade(props.paciente.data_nascimento) + ' Anos'}</Text>
                 </View>
             </TouchableOpacity>
         </View>

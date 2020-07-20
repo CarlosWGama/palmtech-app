@@ -17,11 +17,9 @@ export function DashboardScreen () {
     //Lista de Pacientes
     const [pacientes, setPacientes] = React.useState<Paciente[]>([]);
     React.useEffect(() => {
-      const init = async () => {
+      nav.addListener('focus', async() => {
         setPacientes(await PacienteService.buscarTodos())
-      }
-
-      init();
+      })
     }, [])
 
 
