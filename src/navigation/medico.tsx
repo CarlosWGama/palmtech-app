@@ -10,6 +10,7 @@ import { MedicoConfigScreen } from '../screens/medico/configuracoes';
 import { UltimasFotosScreen } from '../screens/medico/dashboard/pacientes/ultimas-fotos';
 import { FotosPacienteScreen } from '../screens/medico/dashboard/pacientes/fotos-paciente';
 import { PacienteFotoScreen } from '../screens/medico/dashboard/pacientes/foto';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -37,3 +38,21 @@ export const MedicoNavigator = () => (
 )
 
 
+
+
+export function BotaoModal(props: BotaoProps) {
+
+    //Função de Clique
+    const clicou = () => {
+        console.log("clicou")
+    }
+
+    //Renderizando a tela
+    return (
+        <View style={{flex:1, width:'100%', backgroundColor:'black'}}>
+            <TouchableOpacity onPress={clicou}>
+                <Text style={{fontSize: 20, color: 'white'}}>{props.tituloBotao}</Text>
+            </TouchableOpacity>
+        </View>
+    )
+}

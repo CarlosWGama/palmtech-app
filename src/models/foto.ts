@@ -7,3 +7,4 @@ export class Foto {
             public esquerdo_p1?: string, public esquerdo_p2?: string, public esquerdo_p3?: string,
             public direito_p1?: string, public direito_p2?: string, public direito_p3?: string) { }
 }
+
