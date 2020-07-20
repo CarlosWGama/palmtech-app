@@ -99,7 +99,7 @@ export function PacienteEdicaoScreen () {
                           {/* DATA DE NASCIMENTO */}
                           <AppInput titulo="Data de Nascimento" touched={touched.data_nascimento} error={errors.data_nascimento} noBorder>
                             <TouchableOpacity onPress={() => setCalendario(true)}>
-                              <Text>{values.data_nascimento != 0 ? moment(values.data_nascimento).format('DD/MM/YYYY') : 'Clique para selecionar data'}</Text>
+                              <Text>{values.data_nascimento != undefined ? moment(values.data_nascimento).format('DD/MM/YYYY') : 'Clique para selecionar data'}</Text>
                             </TouchableOpacity>
                           </AppInput>
                           {calendario && 
