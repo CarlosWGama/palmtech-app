@@ -30,7 +30,6 @@ export default () => {
                 console.log(e)
             }
             setEstaAtualizacao(false);
-            console.log('aa');
         }
         update();
     }, [])

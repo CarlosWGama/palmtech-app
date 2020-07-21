@@ -2,8 +2,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const api = axios.create({
-    // baseURL: 'http://localhost:8000/api'
-    baseURL: 'http://192.168.0.14/api'
+    baseURL: 'http://palmtech.cwg.services/api'
+    // baseURL: 'http://192.168.0.14/api'
 })
 
 export async function autenticado() {

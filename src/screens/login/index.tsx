@@ -15,7 +15,7 @@ export function LoginScreen (props) {
           </View>
           <View style={style.rodape}>
             <Text style={fontPadrao.regular}>CESMAC - Centro de Inovação</Text>
-            <Text style={fontPadrao.regular}>Versão 0.0.1</Text>
+            <Text style={fontPadrao.regular}>Versão 1.0.0</Text>
           </View>
       </AppMain>
     );
