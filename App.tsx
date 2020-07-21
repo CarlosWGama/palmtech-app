@@ -20,15 +20,20 @@ export default () => {
          setEstaAtualizacao(true);
         //Busca por atualizações
         const update = async () => {
-            const update = await Updates.checkForUpdateAsync();
-            if (update.isAvailable) {
-              await Updates.fetchUpdateAsync();
-              await Updates.reloadAsync();
+            try {
+                const update = await Updates.checkForUpdateAsync();
+                if (update.isAvailable) {
+                  await Updates.fetchUpdateAsync();
+                  await Updates.reloadAsync();
+                }
+            } catch(e) {
+                console.log(e)
             }
             setEstaAtualizacao(false);
+            console.log('aa');
         }
         update();
-    })
+    }, [])
 
     //Carregando Fonte
     let [fontsLoaded] = useFonts({
