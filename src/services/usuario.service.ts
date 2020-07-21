@@ -1,6 +1,6 @@
 import { Usuario } from "../models/usuario";
 import AsyncStorage from '@react-native-community/async-storage';
-import api, { autenticado } from "./api.service";
+import api, { autenticado, getErroMsg, limpaObjeto } from "./api.service";
 
 /** Service que controla o acesso aos dados do usuário */
 const UsuarioService = {
@@ -23,20 +23,25 @@ const UsuarioService = {
 
     /** Cadastra um usuário */
     cadastrar: async (usuario: Usuario): Promise<{sucesso: boolean, erro?:string}> => {
-        const response = await api.post('/usuarios', {usuario})
-        if (response.status == 201)
-            return {sucesso: true}
-        return {sucesso: false, erro: response.data};
+        try {
+            const response = await api.post('/usuarios', {usuario})
+            if (response.status == 201)
+                return {sucesso: true}
+            return {sucesso: false}
+        } catch(erro) {
+            return {sucesso: false, erro:getErroMsg(erro)};
+        }
     },
 
     /** Atualiza o perfil do usuário */  
     editar: async (usuario: Usuario): Promise<{sucesso: boolean, erro?:string}> => {
         const api = await autenticado();
         try {
+            usuario = await limpaObjeto(usuario);
             const response = api.put('/usuarios', {usuario})
             return {sucesso: true}
         } catch(erro) {
-            return {sucesso: false, erro}
+            return {sucesso: false, erro:getErroMsg(erro)}
         }
     },
 

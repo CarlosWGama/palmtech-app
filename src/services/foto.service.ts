@@ -1,6 +1,6 @@
 import { Foto } from "../models/foto";
 import { Paciente } from "../models/paciente";
-import { autenticado, limpaObjeto } from "./api.service";
+import { autenticado, limpaObjeto, getErroMsg } from "./api.service";
 
 export const FotoService = {
 
@@ -9,12 +9,11 @@ export const FotoService = {
         const api = await autenticado();
         try {
             foto = await limpaObjeto(foto);
-            console.log(foto)
             const response = await  api.post('/fotos', {foto});
             if (response.status == 200) return {sucesso: true}
             return {sucesso: false};
         } catch(erro) {
-            return {sucesso: false, erro}
+            return {sucesso: false, erro:getErroMsg(erro)}
         }
     },
 

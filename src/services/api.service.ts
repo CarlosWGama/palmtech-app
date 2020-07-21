@@ -21,6 +21,11 @@ export async function limpaObjeto(obj) {
     return obj;
 }
 
+/** RETORNA AS MENSAGENS DE ERROS */
+export function getErroMsg(erro) {
+    return Object.values(erro.response.data).join("\n")
+}
+
 
 export default api;
 

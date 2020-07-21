@@ -1,6 +1,6 @@
 import { Paciente } from "../models/paciente";
 import { Foto } from "../models/foto";
-import api, { autenticado, limpaObjeto } from "./api.service";
+import api, { autenticado, limpaObjeto, getErroMsg } from "./api.service";
 
 export const PacienteService = {
 
@@ -29,14 +29,13 @@ export const PacienteService = {
     //Cadastrar um paciente
     cadastrar: async(paciente: Paciente): Promise<{sucesso:boolean, erro?: string}> => {
         try {
-            //@ts-ignore
-            paciente = limpaObjeto(paciente)
+            paciente = await limpaObjeto(paciente)
             const response = await api.post('/pacientes', {paciente})
             if (response.status == 201)
                 return {sucesso: true}
             return {sucesso: false, erro: response.data};    
         } catch (erro) {
-            return {sucesso: false, erro};
+            return {sucesso: false, erro:getErroMsg(erro)};
         }
     },
 
@@ -47,7 +46,7 @@ export const PacienteService = {
             if (response.status == 200) return {sucesso: true}
             return {sucesso: false, erro: response.data};    
         } catch (erro) {
-            return {sucesso: false, erro};
+            return {sucesso: false, erro:getErroMsg(erro)};
         }
     },
 }
