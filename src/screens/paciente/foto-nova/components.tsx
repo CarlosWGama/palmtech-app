@@ -102,7 +102,7 @@ export function ItemTirarFoto (props: TirarFotoProps) {
           {!temPermissao && <Text style={[fontPadrao.regular]}>Não é possível tirar foto, pois não permissão de acesso a câmera</Text>}
         
           {temPermissao &&
-            <Camera style={{ flex: 1 }} ratio={'1:1'} type={Camera.Constants.Type.back} ref={ref => setCamera(ref)}>
+            <Camera style={{ flex: 1 }} ratio={'1:1'} autoFocus="on" useCamera2Api  type={Camera.Constants.Type.back} ref={ref => setCamera(ref)}>
               <View
                 style={{
                   flex: 1,
