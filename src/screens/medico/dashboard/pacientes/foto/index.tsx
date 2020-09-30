@@ -31,20 +31,28 @@ export function PacienteFotoScreen () {
     imagens.push({uri: foto.esquerdo_p1})
     imagens.push({uri: foto.esquerdo_p2})
     imagens.push({uri: foto.esquerdo_p3})
+    imagens.push({uri: foto.esquerdo_p4})
+    imagens.push({uri: foto.esquerdo_p5})
     
     imagensGrid.push({uri: foto.esquerdo_p1_grid})
     imagensGrid.push({uri: foto.esquerdo_p2_grid})
     imagensGrid.push({uri: foto.esquerdo_p3_grid})
-  } else reduz = 3
+    imagensGrid.push({uri: foto.esquerdo_p4_grid})
+    imagensGrid.push({uri: foto.esquerdo_p5_grid})
+  } else reduz = 5
   //Adiciona fotos do pé direito
   if (foto.direito_p1) {
     imagens.push({uri: foto.direito_p1})
     imagens.push({uri: foto.direito_p2})
     imagens.push({uri: foto.direito_p3})
+    imagens.push({uri: foto.direito_p4})
+    imagens.push({uri: foto.direito_p5})
     
     imagensGrid.push({uri: foto.direito_p1_grid})
     imagensGrid.push({uri: foto.direito_p2_grid})
     imagensGrid.push({uri: foto.direito_p3_grid})
+    imagensGrid.push({uri: foto.direito_p4_grid})
+    imagensGrid.push({uri: foto.direito_p5_grid})
   }
 
   return (
@@ -63,13 +71,17 @@ export function PacienteFotoScreen () {
           {/* FOTOS */}
           <ScrollView>
             {/* PÉ ESQUERDO */}
-            {foto.esquerdo_p1 && <FotoItem descricao="Pé Esquerdo - Posição 1" imagem={(grid ? foto.esquerdo_p1_grid : foto.esquerdo_p1)} onPress={() => abrirGaleria(0)} />}
-            {foto.esquerdo_p2 && <FotoItem descricao="Pé Esquerdo - Posição 2" imagem={(grid ? foto.esquerdo_p2_grid : foto.esquerdo_p2)} onPress={() => abrirGaleria(1)} />}
-            {foto.esquerdo_p3 && <FotoItem descricao="Pé Esquerdo - Posição 3" imagem={(grid ? foto.esquerdo_p3_grid : foto.esquerdo_p3)} onPress={() => abrirGaleria(2)} />}
+            {foto.esquerdo_p1 && <FotoItem descricao="Pé Esquerdo - 1 - Superior" imagem={(grid ? foto.esquerdo_p1_grid : foto.esquerdo_p1)} onPress={() => abrirGaleria(0)} />}
+            {foto.esquerdo_p2 && <FotoItem descricao="Pé Esquerdo - 2 - Lateral" imagem={(grid ? foto.esquerdo_p2_grid : foto.esquerdo_p2)} onPress={() => abrirGaleria(1)} />}
+            {foto.esquerdo_p3 && <FotoItem descricao="Pé Esquerdo - 3 - Interna" imagem={(grid ? foto.esquerdo_p3_grid : foto.esquerdo_p3)} onPress={() => abrirGaleria(2)} />}
+            {foto.esquerdo_p3 && <FotoItem descricao="Pé Esquerdo - 4 - Posterior" imagem={(grid ? foto.esquerdo_p4_grid : foto.esquerdo_p4)} onPress={() => abrirGaleria(3)} />}
+            {foto.esquerdo_p3 && <FotoItem descricao="Pé Esquerdo - 5 - Plantar" imagem={(grid ? foto.esquerdo_p5_grid : foto.esquerdo_p5)} onPress={() => abrirGaleria(4)} />}
             {/* PÉ DIREITO */}
-            {foto.direito_p1 && <FotoItem descricao="Pé Direito - Posição 1" imagem={(grid ? foto.direito_p1_grid : foto.direito_p1)} onPress={() => abrirGaleria(3-reduz)} />}
-            {foto.direito_p2 && <FotoItem descricao="Pé Direito - Posição 2" imagem={(grid ? foto.direito_p2_grid : foto.direito_p2)} onPress={() => abrirGaleria(4-reduz)} />}
-            {foto.direito_p3 && <FotoItem descricao="Pé Direito - Posição 3" imagem={(grid ? foto.direito_p3_grid : foto.direito_p3)} onPress={() => abrirGaleria(5-reduz)} />}
+            {foto.direito_p1 && <FotoItem descricao="Pé Direito - 1 - Superior" imagem={(grid ? foto.direito_p1_grid : foto.direito_p1)} onPress={() => abrirGaleria(5-reduz)} />}
+            {foto.direito_p2 && <FotoItem descricao="Pé Direito - 2 - Lateral" imagem={(grid ? foto.direito_p2_grid : foto.direito_p2)} onPress={() => abrirGaleria(6-reduz)} />}
+            {foto.direito_p3 && <FotoItem descricao="Pé Direito - 3 - Interna" imagem={(grid ? foto.direito_p3_grid : foto.direito_p3)} onPress={() => abrirGaleria(7-reduz)} />}
+            {foto.direito_p3 && <FotoItem descricao="Pé Direito - 4 - Posterior" imagem={(grid ? foto.direito_p4_grid : foto.direito_p4)} onPress={() => abrirGaleria(8-reduz)} />}
+            {foto.direito_p3 && <FotoItem descricao="Pé Direito - 5 - Plantar" imagem={(grid ? foto.direito_p5_grid : foto.direito_p5)} onPress={() => abrirGaleria(9-reduz)} />}
             
           </ScrollView>
 

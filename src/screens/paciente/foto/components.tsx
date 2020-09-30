@@ -43,5 +43,5 @@ const styleFoto = StyleSheet.create({
     container: {},
     descricao: { backgroundColor: 'white', marginTop: 10, padding: 10},
     texto: { textAlign: 'center'},
-    imagem: {width: 300, height: 300}
+    imagem: {width: 300, height: 400}
 })

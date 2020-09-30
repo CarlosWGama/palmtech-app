@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ImageURISource } from 'react-native';
 import { AppMain, AppHeader, AppContainer } from '../../../themes/theme'; 
 import { useRoute } from '@react-navigation/native';
 import { FotoInfo, FotoItem } from './components';
@@ -22,18 +22,22 @@ export function PacienteFotoVisualizarScreen () {
     setVisivel(true)
   } 
   let reduz = 0;
-  const imagens: {uri:string}[] = []
+  const imagens: ImageURISource[] = []
   //Adiciona fotos do pé esquerdo
   if (foto.esquerdo_p1) {
     imagens.push({uri: foto.esquerdo_p1})
     imagens.push({uri: foto.esquerdo_p2})
     imagens.push({uri: foto.esquerdo_p3})
-  } else reduz = 3
+    imagens.push({uri: foto.esquerdo_p4})
+    imagens.push({uri: foto.esquerdo_p5})
+  } else reduz = 5
   //Adiciona fotos do pé direito
   if (foto.direito_p1) {
-    imagens.push({uri: foto.direito_p1})
+    imagens.push({uri: foto.direito_p1, width: 1280})
     imagens.push({uri: foto.direito_p2})
     imagens.push({uri: foto.direito_p3})
+    imagens.push({uri: foto.direito_p4})
+    imagens.push({uri: foto.direito_p5})
   }
   
   return (
@@ -49,13 +53,17 @@ export function PacienteFotoVisualizarScreen () {
           {/* FOTOS */}
           <ScrollView>
             {/* PÉ ESQUERDO */}
-            {foto.esquerdo_p1 && <FotoItem descricao="Pé Esquerdo - Posição 1" imagem={foto.esquerdo_p1} onPress={() => abrirGaleria(0)} />}
-            {foto.esquerdo_p2 && <FotoItem descricao="Pé Esquerdo - Posição 2" imagem={foto.esquerdo_p2} onPress={() => abrirGaleria(1)} />}
-            {foto.esquerdo_p3 && <FotoItem descricao="Pé Esquerdo - Posição 3" imagem={foto.esquerdo_p3} onPress={() => abrirGaleria(2)} />}
+            {foto.esquerdo_p1 && <FotoItem descricao="Pé Esquerdo - 1 - Superior" imagem={foto.esquerdo_p1} onPress={() => abrirGaleria(0)} />}
+            {foto.esquerdo_p2 && <FotoItem descricao="Pé Esquerdo - 2 - Lateral" imagem={foto.esquerdo_p2} onPress={() => abrirGaleria(1)} />}
+            {foto.esquerdo_p3 && <FotoItem descricao="Pé Esquerdo - 3 - Interna" imagem={foto.esquerdo_p3} onPress={() => abrirGaleria(2)} />}
+            {foto.esquerdo_p3 && <FotoItem descricao="Pé Esquerdo - 4 - Posterior" imagem={foto.esquerdo_p4} onPress={() => abrirGaleria(3)} />}
+            {foto.esquerdo_p3 && <FotoItem descricao="Pé Esquerdo - 5 - Plantar" imagem={foto.esquerdo_p5} onPress={() => abrirGaleria(4)} />}
             {/* PÉ DIREITO */}
-            {foto.direito_p1 && <FotoItem descricao="Pé Direito - Posição 1" imagem={foto.direito_p1} onPress={() => abrirGaleria(3-reduz)} />}
-            {foto.direito_p2 && <FotoItem descricao="Pé Direito - Posição 2" imagem={foto.direito_p2} onPress={() => abrirGaleria(4-reduz)} />}
-            {foto.direito_p3 && <FotoItem descricao="Pé Direito - Posição 3" imagem={foto.direito_p3} onPress={() => abrirGaleria(5-reduz)} />}
+            {foto.direito_p1 && <FotoItem descricao="Pé Direito - 1 - Superior" imagem={foto.direito_p1} onPress={() => abrirGaleria(5-reduz)} />}
+            {foto.direito_p2 && <FotoItem descricao="Pé Direito - 2 - Lateral" imagem={foto.direito_p2} onPress={() => abrirGaleria(6-reduz)} />}
+            {foto.direito_p3 && <FotoItem descricao="Pé Direito - 3 - Interna" imagem={foto.direito_p3} onPress={() => abrirGaleria(7-reduz)} />}
+            {foto.direito_p3 && <FotoItem descricao="Pé Direito - 4 - Posterior" imagem={foto.direito_p4} onPress={() => abrirGaleria(8-reduz)} />}
+            {foto.direito_p3 && <FotoItem descricao="Pé Direito - 5 - Plantar" imagem={foto.direito_p5} onPress={() => abrirGaleria(9-reduz)} />}
           </ScrollView>
 
           {/* VISUALIZADOR DE IMAGENS */}

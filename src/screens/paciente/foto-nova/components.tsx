@@ -20,7 +20,7 @@ export function ItemInformacoes (props: InformacoesProps) {
 
         <View style={{padding: 10}}>
           {/* DESCRIÇÃO */}
-          <Text style={[styleInf.informacao, fontPadrao.regular]}>Ao clicar em Continuar, será solicitado que tire uma foto do seu pé na mesma posição da foto abaixo. {"\n"} Peça para alguém te auxiliar, tirando essa foto para você.</Text>
+          <Text style={[styleInf.informacao, fontPadrao.regular]}>Ao clicar em Continuar, será solicitado que tire uma foto do seu pé na mesma posição da foto abaixo. {"\n"} Use uma folha em branco e peça para alguém te auxiliar, tirando essa foto para você.</Text>
           
           {/* FOTO */}
           <View style={{alignItems:'center', margin: 10}}>
@@ -39,7 +39,7 @@ const styleInf = StyleSheet.create({
   container: { flex:1, justifyContent:'space-between', alignItems: 'stretch', width: '100%', backgroundColor: 'white'},
   titulo: { backgroundColor: Colors.PRIMARY, color: 'white', textAlign:'center', padding: 20, marginBottom: 10},
   informacao: {fontSize: 18, textAlign:'center', marginBottom: 10},
-  imagem: {width: 300, height: 300}  
+  imagem: {width: 300, height: 400}  
 })
 // ==================================================================================
 export interface TirarFotoProps {
@@ -82,7 +82,7 @@ export function ItemTirarFoto (props: TirarFotoProps) {
 
       //Redimensiona a foto
       const imageResult = await ImageManipulator.manipulateAsync(imagem, 
-        [{resize:{width: 524, height: 524}}],
+        [{resize:{width: 960, height: 1280}}],
         { compress: 1, format: ImageManipulator.SaveFormat.JPEG, base64: true }
       );
       imagem = 'data:image/jpg;base64,' +imageResult.base64;
@@ -102,7 +102,7 @@ export function ItemTirarFoto (props: TirarFotoProps) {
           {!temPermissao && <Text style={[fontPadrao.regular]}>Não é possível tirar foto, pois não permissão de acesso a câmera</Text>}
         
           {temPermissao &&
-            <Camera style={{ flex: 1 }} ratio={'1:1'} autoFocus="on" useCamera2Api  type={Camera.Constants.Type.back} ref={ref => setCamera(ref)}>
+            <Camera style={{ flex: 1 }} ratio={'3:4'} autoFocus="on" useCamera2Api  type={Camera.Constants.Type.back} ref={ref => setCamera(ref)}>
               <View
                 style={{
                   flex: 1,
@@ -132,7 +132,7 @@ const styleTF = StyleSheet.create({
   container: {flex: 1, width: '100%', backgroundColor:'white', justifyContent:'space-between'},
   botoes: {flexDirection:"row", width:'100%'},
   titulo: { backgroundColor: Colors.PRIMARY, color: 'white', textAlign:'center', padding: 20, marginBottom: 10},
-  containerCamera: { width: 300, height: 300, alignSelf: 'center'}
+  containerCamera: { width: 300, height: 400, alignSelf: 'center'}
 })
 // ===================================================================================
 export interface ConfirmarFotoProps {
@@ -174,6 +174,6 @@ const styleCF = StyleSheet.create({
   titulo: { backgroundColor: Colors.PRIMARY, color: 'white', textAlign:'center', padding: 20, marginBottom: 10},
   informacoes: {fontSize: 17, textAlign:'center'},
   imagens: { flexDirection: 'row', justifyContent: 'space-around'},
-  imagem: {width: 150, height: 150}
+  imagem: {width: 150, height: 200}
 
 })

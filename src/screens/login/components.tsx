@@ -8,7 +8,6 @@ import UsuarioService from '../../services/usuario.service';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { rdLogar } from '../../store/usuarios/actions';
-import { UsuarioNivel } from '../../models/usuario';
 
 export const Topo = () => (
     <Image source={require('./../../assets/imgs/topo.png')} resizeMode="stretch" style={{
@@ -58,7 +57,7 @@ export const Formulario = () => {
                 onSubmit={logar}>
                 {({handleSubmit, handleChange, errors, touched, handleBlur, isSubmitting}) => (
                     <View style={{backgroundColor:'white', borderRadius: 10, padding: 5, borderColor: 'rgba(0, 0, 0, 0.3)', borderWidth: 1}}>
-                        <Text style={[{textAlign:'center', fontSize: 30, margin:10}, fontPadrao.negrito]}>PalmTech</Text>
+                        <Text style={[{textAlign:'center', fontSize: 30, margin:10}, fontPadrao.negrito]}>FootScan</Text>
                         
                         {erroLogin && <Text style={{color:'red', textAlign:'center'}}>EMAIL OU SENHA INCORRETA</Text>}
 

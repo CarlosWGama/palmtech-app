@@ -1,4 +1,4 @@
-# PalmTech
+# FootScan
 
 Aplicativo voltado para acompanhamento dos pés de pacientes com diabetes. 
 
