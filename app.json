@@ -20,7 +20,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "br.com.carloswgama.palmtech",
+      "package": "br.com.carloswgama.footscan",
       "versionCode": 1
     },
     "web": {
