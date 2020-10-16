@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, Platform, ActivityIndicator, Dimensions } from 'react-native';
 import { AppMain, fontPadrao, AppButton } from '../../../themes/theme'; 
 import * as Colors from './../../../themes/colors';
 import { Camera } from 'expo-camera';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import * as ImageManipulator from "expo-image-manipulator";
 
 export interface InformacoesProps {
@@ -18,7 +18,7 @@ export function ItemInformacoes (props: InformacoesProps) {
          {/* TITULO */}
         <Text style={[styleInf.titulo, fontPadrao.negrito]}>INSTRUÇÕES - {props.titulo}</Text>
 
-        <View style={{padding: 10}}>
+        <ScrollView style={{padding: 10}}>
           {/* DESCRIÇÃO */}
           <Text style={[styleInf.informacao, fontPadrao.regular]}>Ao clicar em Continuar, será solicitado que tire uma foto do seu pé na mesma posição da foto abaixo. {"\n"} Use uma folha em branco e peça para alguém te auxiliar, tirando essa foto para você.</Text>
           
@@ -26,7 +26,7 @@ export function ItemInformacoes (props: InformacoesProps) {
           <View style={{alignItems:'center', margin: 10}}>
             <Image source={props.foto} style={styleInf.imagem} resizeMode="stretch"/>
           </View>
-        </View>
+        </ScrollView>
 
         {/* BOTÂO DE AVANÇAR */}
         <View style={{justifyContent:'flex-end'}}>
@@ -39,7 +39,7 @@ const styleInf = StyleSheet.create({
   container: { flex:1, justifyContent:'space-between', alignItems: 'stretch', width: '100%', backgroundColor: 'white'},
   titulo: { backgroundColor: Colors.PRIMARY, color: 'white', textAlign:'center', padding: 20, marginBottom: 10},
   informacao: {fontSize: 18, textAlign:'center', marginBottom: 10},
-  imagem: {width: 300, height: 400}  
+  imagem: { height: 300, width: 250}  
 })
 // ==================================================================================
 export interface TirarFotoProps {
